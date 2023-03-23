@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title>Kevin Ahrendt</title>
+		<description>A personal website for 3D printing, mathematics, data science, and home automation.</description>
+		<link></link>
+		<atom:link href="/rss-feed.xml" rel="self" type="application/rss+xml" />
+		
+			<item>
+				<title>Approximating Dew Point in ESPHome</title>
+				
+					<dc:creator>Kevin Ahrendt</dc:creator>
+				
+				
+					<description>&lt;p&gt;A dew point is a practical measure of moisture in the air that is a good proxy for occupant comfort. It is better to determine if a space feels “muggy” than relative humidity. The dew point is the air temperature, assuming the amount of water vapor in the air remains constant, in which the relative humidity of the air would be 100%. If the temperature decreases to be less than the dew point, water will condense on surfaces &lt;a class=&quot;citation&quot; href=&quot;#nws-dewpoint_vs_humidity&quot;&gt;[2]&lt;/a&gt;. Another way to quantify the absolute quantity of moisture in the air is to use &lt;a href=&quot;https://esphome.io/components/sensor/absolute_humidity.html&quot;&gt;absolute humidity&lt;/a&gt;, but it is arguably easier to interpret a dew point has the same units as a regular temperature measurement.&lt;/p&gt;
+</description>
+				
+				<pubDate>Wed, 20 Jul 2022 00:00:00 -0400</pubDate>
+				<link>/approximating-dew-point</link>
+				<guid isPermaLink="true">/approximating-dew-point</guid>
+			</item>
+		
+			<item>
+				<title>Hyperbolic Paraboloid Printed Surface Classroom Activity</title>
+				
+					<dc:creator>Kevin Ahrendt</dc:creator>
+				
+				
+					<description>&lt;h2 id=&quot;description&quot;&gt;Description:&lt;/h2&gt;
+&lt;p&gt;These are models for several quadric surfaces that are useful for Multivariable Calculus classes. The surfaces include raised bumps representing traces. The models allow students to make the connection between the abstract formula/2D pictures to the actual surface in 3D. I have also inclued an in-classroom activity that I used when teaching Multivariable Calculus. Each group was given a printed version of the hyperbolic paraboloid surface, and then they worked through the questions on the activity together.&lt;/p&gt;
+</description>
+				
+				<pubDate>Mon, 19 Aug 2019 00:00:00 -0400</pubDate>
+				<link>/hyperbolic_paraboloid_activity</link>
+				<guid isPermaLink="true">/hyperbolic_paraboloid_activity</guid>
+			</item>
+		
+			<item>
+				<title>Discrete Fractional Difference of Quadratic Function</title>
+				
+					<dc:creator>Kevin Ahrendt</dc:creator>
+				
+				
+					<description>&lt;h2 id=&quot;description&quot;&gt;Description:&lt;/h2&gt;
+&lt;p&gt;This is a three dimensional graph of the discrete function \((x+1)(x)\) defined on the natural numbers. This is an analogue to the quadratic function in the nabla discrete calculus; in particular, this function is known as the rising function. One axis represents the continuous order of the Riemann-Liouville fractional difference ranging from 0 to 2. The \(x\)-axis ranges in discrete steps from 1 to 7. The zeroth order difference, given by \((x+1)(x)\), the first difference, given by \(2x+1\), and the second difference, given by \(2\) are highlighted with a ridge. The Riemann-Liouville fractional difference is continuous with the respect to the order of the difference, so the transition between the zeroth, first, and second difference to the fractional differences in between results in a smooth graph in each discrete x-value.&lt;/p&gt;
+</description>
+				
+				<pubDate>Mon, 05 Aug 2019 00:00:00 -0400</pubDate>
+				<link>/discrete_quadratic_print</link>
+				<guid isPermaLink="true">/discrete_quadratic_print</guid>
+			</item>
+		
+			<item>
+				<title>Continuous Fractional Derivative of Quadratic Function</title>
+				
+					<dc:creator>Kevin Ahrendt</dc:creator>
+				
+				
+					<description>&lt;h2 id=&quot;description&quot;&gt;Description:&lt;/h2&gt;
+&lt;p&gt;This is a three dimensional graph of \(x^2\), with one axis representing the Riemann-Liouville fractional derivative order ranging from 0 to 2. The \(x\)-axis ranges from 1 to 7. The zeroth order derivative, given by \(x^2\), the first derivative, given by \(2x\), and the second derivative, given by \(2\) are highlighted with a ridge. The Riemann-Liouville fractional derivative is continuous with the respect to the order of the derivative, so the transition between the zeroth, first, and second derivative to the fractional derivatives in between results in a smooth graph.&lt;/p&gt;
+</description>
+				
+				<pubDate>Mon, 05 Aug 2019 00:00:00 -0400</pubDate>
+				<link>/continuous_quadratic_print</link>
+				<guid isPermaLink="true">/continuous_quadratic_print</guid>
+			</item>
+		
+			<item>
+				<title>Towers of Hanoi</title>
+				
+					<dc:creator>Kevin Ahrendt</dc:creator>
+				
+				
+					<description>&lt;h2 id=&quot;description&quot;&gt;Description:&lt;/h2&gt;
+&lt;p&gt;This model represents A simple Towers of Hanoi example with four rings. &lt;a href=&quot;https://en.wikipedia.org/wiki/Tower_of_Hanoi&quot;&gt;Wikipedia&lt;/a&gt; has a lot of great information on the problem.&lt;/p&gt;
+</description>
+				
+				<pubDate>Sat, 03 Aug 2019 00:00:00 -0400</pubDate>
+				<link>/towers_of_hanoi_print</link>
+				<guid isPermaLink="true">/towers_of_hanoi_print</guid>
+			</item>
+		
+			<item>
+				<title>Continuous Fractional Derivative of Exponential Function</title>
+				
+					<dc:creator>Kevin Ahrendt</dc:creator>
+				
+				
+					<description>&lt;h2 id=&quot;description&quot;&gt;Description:&lt;/h2&gt;
+&lt;p&gt;This model is a three dimensional graph \(e^x\), with one axis representing the Riemann-Liouville fractional derivative order ranging from 0 to 1. The x-axis ranges from 0.05 to 1; the fractional derivative of \(e^x\) approaches infinity as x approaches 0, hence the axis starts at 0.05 avoid the asymptote. The Riemann-Liouville fractional derivative is continuous with the respect to the order of the derivative, so this graph is nice and smooth.&lt;/p&gt;
+</description>
+				
+				<pubDate>Fri, 08 Dec 2017 00:00:00 -0500</pubDate>
+				<link>/continuous_exponential_print</link>
+				<guid isPermaLink="true">/continuous_exponential_print</guid>
+			</item>
+		
+			<item>
+				<title>3D Printing Setup</title>
+				
+					<dc:creator>Kevin Ahrendt</dc:creator>
+				
+				
+					<description>&lt;p&gt;I am fascinated with 3D printing and am interested in making mathematical puzzles using that process, along with models that illustrate my research interests. I primarily use Autodesk Fusion 360 to design functional models and use Mathematica to generate mathematical models. I have also have experience with OpenSCAD for model design. My current printer is a &lt;a href=&quot;https://vorondesign.com/&quot;&gt;Voron CoreXY V2.1&lt;/a&gt;.​&lt;/p&gt;
+</description>
+				
+				<pubDate>Thu, 01 Jun 2017 00:00:00 -0400</pubDate>
+				<link>/3d-printing-setup</link>
+				<guid isPermaLink="true">/3d-printing-setup</guid>
+			</item>
+		
+	</channel>
+</rss>

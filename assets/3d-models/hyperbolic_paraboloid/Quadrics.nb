@@ -1,0 +1,1230 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     54143,       1222]
+NotebookOptionsPosition[     53427,       1203]
+NotebookOutlinePosition[     53765,       1218]
+CellTagsIndexPosition[     53722,       1215]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{"surfaceThickness", ":=", " ", "0.2"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"tubeThickness", ":=", "0.15"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Regions", " ", "for", " ", "surfaces"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"ellipsoidRegionFunction", ":=", 
+  RowBox[{"Function", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"x", ",", "y", ",", "z"}], "}"}], ",", 
+    RowBox[{
+     RowBox[{"-", "2"}], "\[LessEqual]", "z", "\[LessEqual]", "2"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"dcRegionFunction", ":=", 
+  RowBox[{"Function", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"x", ",", "y", ",", "z"}], "}"}], ",", 
+    RowBox[{
+     RowBox[{"-", "2"}], "\[LessEqual]", "z", "\[LessEqual]", "2"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"h1SRegionFunction", ":=", 
+  RowBox[{"Function", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"x", ",", "y", ",", "z"}], "}"}], ",", 
+    RowBox[{
+     RowBox[{"-", "2"}], "\[LessEqual]", "z", "\[LessEqual]", "2"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"epRegionFunction", ":=", 
+  RowBox[{"Function", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"x", ",", "y", ",", "z"}], "}"}], ",", 
+    RowBox[{"0", "\[LessEqual]", "z", "\[LessEqual]", "4"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"hpRegionFunction", ":=", 
+   RowBox[{"Function", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"x", ",", "y", ",", "z"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", "2"}], "\[LessEqual]", "x", "\[LessEqual]", "2"}], "&&", 
+      RowBox[{
+       RowBox[{"-", "2"}], "\[LessEqual]", "y", "\[LessEqual]", "2"}], "&&", 
+      RowBox[{
+       RowBox[{"-", "4"}], "\[LessEqual]", "z", "\[LessEqual]", "4"}]}]}], 
+    "]"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Graphs", " ", "of", " ", "surfaces", " ", "themselves"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"ellipsoid", " ", ":=", 
+  RowBox[{"ParametricPlot3D", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"x", ",", "y", ",", 
+        RowBox[{"Sqrt", "[", 
+         RowBox[{"1", "-", 
+          RowBox[{"x", "^", "2"}], "-", 
+          RowBox[{"y", "^", "2"}]}], "]"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", "y", ",", 
+        RowBox[{"-", 
+         RowBox[{"Sqrt", "[", 
+          RowBox[{"1", "-", 
+           RowBox[{"x", "^", "2"}], "-", 
+           RowBox[{"y", "^", "2"}]}], "]"}]}]}], "}"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", 
+      RowBox[{"-", "5"}], ",", "5"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"y", ",", 
+      RowBox[{"-", "4"}], ",", "4"}], "}"}], ",", 
+    RowBox[{"PlotStyle", "\[Rule]", 
+     RowBox[{"Thickness", "[", "surfaceThickness", "]"}]}], ",", 
+    RowBox[{"RegionFunction", "\[Rule]", "ellipsoidRegionFunction"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"doubleCone", ":=", " ", 
+  RowBox[{"Show", "[", 
+   RowBox[{
+    RowBox[{"ParametricPlot3D", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"x", ",", "y", ",", 
+          RowBox[{"Sqrt", "[", 
+           RowBox[{
+            RowBox[{"1.5", 
+             RowBox[{"x", "^", "2"}]}], "+", 
+            RowBox[{"y", "^", "2"}]}], "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", "y", ",", 
+          RowBox[{"-", 
+           RowBox[{"Sqrt", "[", 
+            RowBox[{
+             RowBox[{"1.5", 
+              RowBox[{"x", "^", "2"}]}], "+", 
+             RowBox[{"y", "^", "2"}]}], "]"}]}]}], "}"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", 
+        RowBox[{"-", "5"}], ",", "5"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"y", ",", 
+        RowBox[{"-", "4"}], ",", "4"}], "}"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"Thickness", "[", "surfaceThickness", "]"}]}], ",", 
+      RowBox[{"RegionFunction", "\[Rule]", "dcRegionFunction"}]}], "]"}], ",", 
+    RowBox[{"Graphics3D", "[", 
+     RowBox[{"Cylinder", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", 
+           RowBox[{"-", "0.2"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "0.2"}], "}"}]}], "}"}], ",", "0.3"}], 
+      "]"}], "]"}]}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"hyperboloidOneSheet", ":=", " ", 
+  RowBox[{"ParametricPlot3D", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"x", ",", "y", ",", 
+        RowBox[{"Sqrt", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"x", "/", "1.5"}], ")"}], "^", "2"}], "+", 
+          RowBox[{"y", "^", "2"}], "-", "1"}], "]"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", "y", ",", 
+        RowBox[{"-", 
+         RowBox[{"Sqrt", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"x", "/", "1.5"}], ")"}], "^", "2"}], "+", 
+           RowBox[{"y", "^", "2"}], "-", "1"}], "]"}]}]}], "}"}]}], "}"}], 
+    ",", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", 
+      RowBox[{"-", "5"}], ",", "5"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"y", ",", 
+      RowBox[{"-", "4"}], ",", "4"}], "}"}], ",", 
+    RowBox[{"PlotStyle", "\[Rule]", 
+     RowBox[{"Thickness", "[", "surfaceThickness", "]"}]}], ",", 
+    RowBox[{"RegionFunction", "\[Rule]", "h1SRegionFunction"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"ellipticParaboloid", " ", ":=", " ", 
+  RowBox[{"ParametricPlot3D", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"x", ",", "y", ",", 
+      RowBox[{
+       RowBox[{"x", "^", "2"}], "+", 
+       RowBox[{"2", 
+        RowBox[{"y", "^", "2"}]}]}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", 
+      RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"y", ",", 
+      RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+    RowBox[{"PlotStyle", "\[Rule]", 
+     RowBox[{"Thickness", "[", "surfaceThickness", "]"}]}], ",", 
+    RowBox[{"RegionFunction", "\[Rule]", "epRegionFunction"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"hyperbolicParaboloid", " ", ":=", 
+   RowBox[{"ParametricPlot3D", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"x", ",", "y", ",", 
+       RowBox[{
+        RowBox[{"x", "^", "2"}], "-", 
+        RowBox[{"y", "^", "2"}]}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", 
+       RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"y", ",", 
+       RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+     RowBox[{"PlotStyle", "\[Rule]", 
+      RowBox[{"Thickness", "[", "surfaceThickness", "]"}]}], ",", 
+     RowBox[{"RegionFunction", "\[Rule]", "hpRegionFunction"}]}], "]"}]}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Contour", " ", "curves"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"xPlaneDC", ":=", 
+  RowBox[{"ParametricPlot3D", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"1", ",", "y", ",", 
+        RowBox[{
+         RowBox[{"Sqrt", "[", 
+          RowBox[{
+           RowBox[{"2", 
+            RowBox[{"y", "^", "2"}]}], "+", "3"}], "]"}], "/", 
+         RowBox[{"Sqrt", "[", "2", "]"}]}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "y", ",", 
+        RowBox[{
+         RowBox[{"-", 
+          RowBox[{"Sqrt", "[", 
+           RowBox[{
+            RowBox[{"2", 
+             RowBox[{"y", "^", "2"}]}], "+", "3"}], "]"}]}], "/", 
+         RowBox[{"Sqrt", "[", "2", "]"}]}]}], "}"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"y", ",", 
+      RowBox[{"-", "4"}], ",", "4"}], "}"}], ",", 
+    RowBox[{"PlotStyle", "\[Rule]", 
+     RowBox[{"Tube", "[", "tubeThickness", "]"}]}], ",", 
+    RowBox[{"RegionFunction", "\[Rule]", "dcRegionFunction"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"yPlaneDC", ":=", 
+  RowBox[{"ParametricPlot3D", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"x", ",", "1", ",", 
+        RowBox[{
+         RowBox[{"Sqrt", "[", 
+          RowBox[{
+           RowBox[{"3", 
+            RowBox[{"x", "^", "2"}]}], "+", "2"}], "]"}], "/", 
+         RowBox[{"Sqrt", "[", "2", "]"}]}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", "1", ",", 
+        RowBox[{
+         RowBox[{"-", 
+          RowBox[{"Sqrt", "[", 
+           RowBox[{
+            RowBox[{"3", 
+             RowBox[{"x", "^", "2"}]}], "+", "2"}], "]"}]}], "/", 
+         RowBox[{"Sqrt", "[", "2", "]"}]}]}], "}"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", 
+      RowBox[{"-", "5"}], ",", "5"}], "}"}], ",", 
+    RowBox[{"PlotStyle", "\[Rule]", 
+     RowBox[{"Tube", "[", "tubeThickness", "]"}]}], ",", 
+    RowBox[{"RegionFunction", "\[Rule]", "dcRegionFunction"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"zPlaneDC", ":=", 
+  RowBox[{"ParametricPlot3D", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"x", ",", 
+        RowBox[{
+         RowBox[{"-", 
+          RowBox[{"Sqrt", "[", 
+           RowBox[{"2", "-", 
+            RowBox[{"3", 
+             RowBox[{"x", "^", "2"}]}]}], "]"}]}], "/", 
+         RowBox[{"Sqrt", "[", "2", "]"}]}], ",", "1"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", 
+        RowBox[{
+         RowBox[{"Sqrt", "[", 
+          RowBox[{"2", "-", 
+           RowBox[{"3", 
+            RowBox[{"x", "^", "2"}]}]}], "]"}], "/", 
+         RowBox[{"Sqrt", "[", "2", "]"}]}], ",", "1"}], "}"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", 
+      RowBox[{"-", "5"}], ",", "5"}], "}"}], ",", 
+    RowBox[{"PlotStyle", "\[Rule]", 
+     RowBox[{"Tube", "[", "tubeThickness", "]"}]}], ",", 
+    RowBox[{"RegionFunction", "\[Rule]", "dcRegionFunction"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"contourCurvesDC", ":=", 
+   RowBox[{"Show", "[", 
+    RowBox[{"xPlaneDC", ",", "yPlaneDC", ",", "zPlaneDC"}], "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"xPlaneh1S", ":=", 
+  RowBox[{"ParametricPlot3D", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"1", ",", "y", ",", 
+        RowBox[{
+         RowBox[{"1", "/", "3"}], 
+         RowBox[{"Sqrt", "[", 
+          RowBox[{
+           RowBox[{"9", 
+            RowBox[{"y", "^", "2"}]}], "-", "5"}], "]"}]}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "y", ",", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "1"}], "/", "3"}], 
+         RowBox[{"Sqrt", "[", 
+          RowBox[{
+           RowBox[{"9", 
+            RowBox[{"y", "^", "2"}]}], "-", "5"}], "]"}]}]}], "}"}]}], "}"}], 
+    ",", 
+    RowBox[{"{", 
+     RowBox[{"y", ",", 
+      RowBox[{"-", "4"}], ",", "4"}], "}"}], ",", 
+    RowBox[{"PlotStyle", "\[Rule]", 
+     RowBox[{"Tube", "[", "tubeThickness", "]"}]}], ",", 
+    RowBox[{"RegionFunction", "\[Rule]", "h1SRegionFunction"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"yPlaneh1S", ":=", 
+  RowBox[{"ParametricPlot3D", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"x", ",", "1", ",", 
+        RowBox[{
+         RowBox[{"-", "2"}], 
+         RowBox[{"x", "/", "3"}]}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", "1", ",", 
+        RowBox[{"2", 
+         RowBox[{"x", "/", "3"}]}]}], "}"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", 
+      RowBox[{"-", "5"}], ",", "5"}], "}"}], ",", 
+    RowBox[{"PlotStyle", "\[Rule]", 
+     RowBox[{"Tube", "[", "tubeThickness", "]"}]}], ",", 
+    RowBox[{"RegionFunction", "\[Rule]", "h1SRegionFunction"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"zPlaneh1S", ":=", 
+  RowBox[{"ParametricPlot3D", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"x", ",", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "1"}], "/", "3"}], 
+         RowBox[{"Sqrt", "[", "2", "]"}], 
+         RowBox[{"Sqrt", "[", 
+          RowBox[{"9", "-", 
+           RowBox[{"2", 
+            RowBox[{"x", "^", "2"}]}]}], "]"}]}], ",", "1"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", 
+        RowBox[{
+         RowBox[{"1", "/", "3"}], 
+         RowBox[{"Sqrt", "[", "2", "]"}], 
+         RowBox[{"Sqrt", "[", 
+          RowBox[{"9", "-", 
+           RowBox[{"2", 
+            RowBox[{"x", "^", "2"}]}]}], "]"}]}], ",", "1"}], "}"}]}], "}"}], 
+    ",", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", 
+      RowBox[{"-", "5"}], ",", "5"}], "}"}], ",", 
+    RowBox[{"PlotStyle", "\[Rule]", 
+     RowBox[{"Tube", "[", "tubeThickness", "]"}]}], ",", 
+    RowBox[{"RegionFunction", "\[Rule]", "h1SRegionFunction"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"contourCurvesh1S", ":=", 
+   RowBox[{"Show", "[", 
+    RowBox[{"xPlaneh1S", ",", "yPlaneh1S", ",", "zPlaneh1S"}], "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"xPlaneEP", " ", ":=", " ", 
+  RowBox[{"ParametricPlot3D", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"1", ",", "y", ",", 
+      RowBox[{"1", "+", 
+       RowBox[{"2", 
+        RowBox[{"y", "^", "2"}]}]}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"y", ",", 
+      RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+    RowBox[{"PlotStyle", "\[Rule]", 
+     RowBox[{"Tube", "[", "tubeThickness", "]"}]}], ",", 
+    RowBox[{"RegionFunction", "\[Rule]", "epRegionFunction"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"yPlaneEP", " ", ":=", " ", 
+  RowBox[{"ParametricPlot3D", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"x", ",", "1", ",", 
+      RowBox[{
+       RowBox[{"x", "^", "2"}], "+", "2"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", 
+      RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+    RowBox[{"PlotStyle", "\[Rule]", 
+     RowBox[{"Tube", "[", "tubeThickness", "]"}]}], ",", 
+    RowBox[{"RegionFunction", "\[Rule]", "epRegionFunction"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"zPlaneEP", ":=", 
+  RowBox[{"ParametricPlot3D", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"x", ",", 
+        RowBox[{
+         RowBox[{"-", 
+          RowBox[{"Sqrt", "[", 
+           RowBox[{"1", "-", 
+            RowBox[{"x", "^", "2"}]}], "]"}]}], "/", 
+         RowBox[{"Sqrt", "[", "2", "]"}]}], ",", "1"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", 
+        RowBox[{
+         RowBox[{"Sqrt", "[", 
+          RowBox[{"1", "-", 
+           RowBox[{"x", "^", "2"}]}], "]"}], "/", 
+         RowBox[{"Sqrt", "[", "2", "]"}]}], ",", "1"}], "}"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", 
+      RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+    RowBox[{"PlotStyle", "\[Rule]", 
+     RowBox[{"Tube", "[", "tubeThickness", "]"}]}], ",", 
+    RowBox[{"RegionFunction", "\[Rule]", "epRegionFunction"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"contourCurvesEP", ":=", " ", 
+   RowBox[{"Show", "[", 
+    RowBox[{"xPlaneEP", ",", "yPlaneEP", ",", "zPlaneEP"}], "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"xPlaneHP", ":=", 
+  RowBox[{"ParametricPlot3D", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"0", ",", "y", ",", 
+      RowBox[{"-", 
+       RowBox[{"y", "^", "2"}]}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"y", ",", 
+      RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+    RowBox[{"RegionFunction", "\[Rule]", "hpRegionFunction"}], ",", 
+    RowBox[{"PlotStyle", "\[Rule]", 
+     RowBox[{"Tube", "[", "tubeThickness", "]"}]}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"yPlaneHP", ":=", 
+  RowBox[{"ParametricPlot3D", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"x", ",", "0", ",", 
+      RowBox[{"x", "^", "2"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", 
+      RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+    RowBox[{"RegionFunction", "\[Rule]", "hpRegionFunction"}], ",", 
+    RowBox[{"PlotStyle", "\[Rule]", 
+     RowBox[{"Tube", "[", "tubeThickness", "]"}]}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"zElevatedPlaneHP", ":=", 
+  RowBox[{"ParametricPlot3D", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"x", ",", 
+        RowBox[{
+         RowBox[{"-", 
+          RowBox[{"Sqrt", "[", 
+           RowBox[{
+            RowBox[{"2", 
+             RowBox[{"x", "^", "2"}]}], "-", "3"}], "]"}]}], "/", 
+         RowBox[{"Sqrt", "[", "2", "]"}]}], ",", "1.5"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", 
+        RowBox[{
+         RowBox[{"Sqrt", "[", 
+          RowBox[{
+           RowBox[{"2", 
+            RowBox[{"x", "^", "2"}]}], "-", "3"}], "]"}], "/", 
+         RowBox[{"Sqrt", "[", "2", "]"}]}], ",", "1.5"}], "}"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", 
+      RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+    RowBox[{"RegionFunction", "\[Rule]", "hpRegionFunction"}], ",", 
+    RowBox[{"PlotStyle", "\[Rule]", 
+     RowBox[{"Tube", "[", "tubeThickness", "]"}]}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"contourCurvesHP", " ", ":=", " ", 
+   RowBox[{"Show", "[", 
+    RowBox[{"xPlaneHP", ",", "yPlaneHP", ",", "zElevatedPlaneHP"}], "]"}]}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Combined", " ", "Graphs"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "There", " ", "is", " ", "some", " ", "black", " ", "magic", " ", 
+     "here"}], ";", " ", 
+    RowBox[{
+    "to", " ", "make", " ", "all", " ", "parts", " ", "of", " ", "the", " ", 
+     "graph", " ", "show", " ", "up", " ", "in", " ", "the", " ", "final", 
+     " ", "stl", " ", "file", " ", "I", " ", "had", " ", "to", " ", 
+     "essentially", " ", "randomly", " ", "try", " ", "repairing", " ", 
+     "parts", " ", "of", " ", "some", " ", "of", " ", "the", " ", "meshes", 
+     " ", "and", " ", "mess", " ", "around", " ", "with", " ", "Prinout3D", 
+     " ", "to", " ", "have", " ", "a", " ", "final", " ", "model", " ", 
+     "repair", " ", "or", " ", 
+     RowBox[{"not", ".", " ", "I"}], " ", "could", " ", "not", " ", "make", 
+     " ", "sense", " ", "of", " ", "the", " ", "reason", " ", "why", " ", 
+     "some", " ", "things", " ", "worked", " ", "and", " ", "some", " ", 
+     RowBox[{"didnlt", "."}]}]}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"outputDC", ":=", " ", 
+  RowBox[{"Show", "[", 
+   RowBox[{"doubleCone", ",", 
+    RowBox[{"RepairMesh", "[", 
+     RowBox[{"DiscretizeGraphics", "[", "contourCurvesDC", "]"}], "]"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"outputh1S", ":=", " ", 
+  RowBox[{"Show", "[", 
+   RowBox[{
+    RowBox[{"RepairMesh", "[", 
+     RowBox[{"DiscretizeGraphics", "[", "hyperboloidOneSheet", "]"}], "]"}], 
+    ",", "contourCurvesh1S"}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"outputEP", " ", ":=", " ", 
+  RowBox[{"Show", "[", 
+   RowBox[{
+    RowBox[{"RepairMesh", "[", 
+     RowBox[{"DiscretizeGraphics", "[", "ellipticParaboloid", "]"}], "]"}], 
+    ",", "contourCurvesEP"}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"outputHP", " ", ":=", " ", 
+   RowBox[{"Show", "[", 
+    RowBox[{
+     RowBox[{"RepairMesh", "[", 
+      RowBox[{"DiscretizeGraphics", "[", "hyperbolicParaboloid", "]"}], "]"}],
+      ",", "contourCurvesHP"}], "]"}]}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Generate", " ", "STL", " ", "Files"}], " ", "*)"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"Printout3D", "[", 
+  RowBox[{"outputDC", ",", 
+   RowBox[{
+    RowBox[{"NotebookDirectory", "[", "]"}], "<>", 
+    "\"\<Double Cone.stl\>\""}], ",", 
+   RowBox[{"RegionSize", "\[Rule]", 
+    RowBox[{"Quantity", "[", 
+     RowBox[{
+      RowBox[{"{", "50", "}"}], ",", "\"\<mm\>\""}], "]"}]}], ",", 
+   RowBox[{"Method", "\[Rule]", "\"\<SkipModelRepair\>\""}]}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"(*", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Printout3D", "[", 
+    RowBox[{"outputh1S", ",", 
+     RowBox[{
+      RowBox[{"NotebookDirectory", "[", "]"}], "<>", 
+      "\"\<Hyperboloid One Sheet.stl\>\""}], ",", 
+     RowBox[{"RegionSize", "\[Rule]", 
+      RowBox[{"Quantity", "[", 
+       RowBox[{
+        RowBox[{"{", "50", "}"}], ",", "\"\<mm\>\""}], "]"}]}], ",", 
+     RowBox[{"Method", "\[Rule]", "\"\<SkipModelRepair\>\""}]}], "]"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"Printout3D", "[", 
+    RowBox[{"outputEP", ",", 
+     RowBox[{
+      RowBox[{"NotebookDirectory", "[", "]"}], "<>", 
+      "\"\<Elliptic Paraboloid.stl\>\""}], ",", 
+     RowBox[{"RegionSize", "\[Rule]", 
+      RowBox[{"Quantity", "[", 
+       RowBox[{
+        RowBox[{"{", "50", "}"}], ",", "\"\<mm\>\""}], "]"}]}]}], "]"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"Printout3D", "[", 
+    RowBox[{"outputHP", ",", 
+     RowBox[{
+      RowBox[{"NotebookDirectory", "[", "]"}], "<>", 
+      "\"\<Hyperbolic Paraboloid.stl\>\""}], ",", 
+     RowBox[{"RegionSize", "\[Rule]", 
+      RowBox[{"Quantity", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"50", ",", "50", ",", "50"}], "}"}], ",", "\"\<mm\>\""}], 
+       "]"}]}], ",", 
+     RowBox[{"Method", "\[Rule]", "\"\<SkipModelRepair\>\""}]}], "]"}], 
+   "\[IndentingNewLine]"}]}]}], "Input",
+ CellChangeTimes->{{3.724155052575481*^9, 3.724155056198956*^9}, {
+   3.724175255855959*^9, 3.724175273914145*^9}, {3.774267280603323*^9, 
+   3.774267398653819*^9}, {3.774267431394595*^9, 3.774267560041047*^9}, {
+   3.77428612275101*^9, 3.774286261291813*^9}, {3.774286697941441*^9, 
+   3.7742869260452833`*^9}, {3.774287225912641*^9, 3.774287247580563*^9}, {
+   3.774287291011073*^9, 3.774287374742504*^9}, {3.7742875120067596`*^9, 
+   3.7742875218002653`*^9}, {3.77428824005746*^9, 3.774288284514717*^9}, {
+   3.774288318190012*^9, 3.774288336539476*^9}, {3.774288367480247*^9, 
+   3.7742883693731203`*^9}, {3.774288435976966*^9, 3.7742884449908247`*^9}, {
+   3.774288481417365*^9, 3.774288483414874*^9}, 3.774288527389565*^9, {
+   3.774288676275444*^9, 3.774288678343196*^9}, 3.774288708700337*^9, {
+   3.774288809435618*^9, 3.7742888263061132`*^9}, {3.774288966498745*^9, 
+   3.7742889673826733`*^9}, {3.774289005186432*^9, 3.7742890161026087`*^9}, {
+   3.7742891048737297`*^9, 3.774289194720364*^9}, {3.774289259710281*^9, 
+   3.774289364046749*^9}, {3.774289407914336*^9, 3.7742894348115187`*^9}, {
+   3.774289523511113*^9, 3.774289535971141*^9}, {3.774289576638348*^9, 
+   3.7742895780050097`*^9}, {3.7742896403372993`*^9, 3.774289673927463*^9}, {
+   3.774289746856017*^9, 3.7742897589468603`*^9}, {3.7742898018382587`*^9, 
+   3.774289809643385*^9}, {3.774295315063714*^9, 3.774295334785193*^9}, {
+   3.774295365219795*^9, 3.774295366048436*^9}, {3.774295528192314*^9, 
+   3.774295620830586*^9}, {3.7742956544094687`*^9, 3.774295656438383*^9}, {
+   3.774295725962097*^9, 3.774295768231161*^9}, {3.7742958211069107`*^9, 
+   3.7742958254953327`*^9}, {3.7742960408362017`*^9, 3.77429623020713*^9}, {
+   3.7742963042794857`*^9, 3.774296306023274*^9}, {3.7742964019408484`*^9, 
+   3.7742964223283167`*^9}, {3.77429645457295*^9, 3.774296748054421*^9}, {
+   3.774296797210977*^9, 3.774297067500319*^9}, {3.7742971066473713`*^9, 
+   3.7742971306196632`*^9}, {3.774297161793777*^9, 3.774297213382217*^9}, {
+   3.774297399223628*^9, 3.774297399376979*^9}, {3.774297577735106*^9, 
+   3.774297751572174*^9}, {3.774297826913685*^9, 3.7742978512152767`*^9}, {
+   3.774298003355344*^9, 3.774298031358693*^9}, {3.774298107326746*^9, 
+   3.774298133802073*^9}, {3.7742981695749817`*^9, 3.774298198812455*^9}, {
+   3.7742982408735857`*^9, 3.774298309794984*^9}, {3.774298366116247*^9, 
+   3.774298391465642*^9}, {3.774307302841969*^9, 3.774307335501162*^9}, {
+   3.774307499052814*^9, 3.774307528679143*^9}, {3.774307567819621*^9, 
+   3.7743075788283863`*^9}, {3.774308051086171*^9, 3.774308201298677*^9}, {
+   3.774349017493413*^9, 3.774349018535696*^9}, {3.77434906694746*^9, 
+   3.774349068414812*^9}, 3.7743491346187477`*^9, {3.774349166093913*^9, 
+   3.774349244467174*^9}, {3.774349286639203*^9, 3.774349351277363*^9}, {
+   3.77434945407262*^9, 3.774349456820964*^9}, {3.774349515501032*^9, 
+   3.774349521682418*^9}, {3.774349582784614*^9, 3.774349617070939*^9}, {
+   3.774349953970275*^9, 3.774350057608666*^9}, {3.774350089456765*^9, 
+   3.77435009944014*^9}, {3.774350129788762*^9, 3.774350132610393*^9}, {
+   3.774350162686892*^9, 3.77435044557815*^9}, {3.7743505068399076`*^9, 
+   3.7743505071652737`*^9}, {3.774350909084149*^9, 3.774350946986902*^9}, {
+   3.774351000149702*^9, 3.7743510088921337`*^9}, {3.7743510654486313`*^9, 
+   3.774351069414322*^9}, {3.7743511079388723`*^9, 3.774351142527823*^9}, {
+   3.7743513387693*^9, 3.774351379197123*^9}, 3.774351409535877*^9, {
+   3.774351448737966*^9, 3.7743514890241337`*^9}, {3.774351578998165*^9, 
+   3.774351848562933*^9}, {3.774351882061487*^9, 3.774351928827249*^9}, {
+   3.7743519693748713`*^9, 3.7743521108422117`*^9}, {3.774352143495202*^9, 
+   3.774352234741684*^9}, {3.774352282319173*^9, 3.774352282505455*^9}, {
+   3.7743523441428947`*^9, 3.774352346355734*^9}, {3.774352509661553*^9, 
+   3.774352575109338*^9}, {3.7743527805215473`*^9, 3.774352813356661*^9}, {
+   3.7743528557856293`*^9, 3.774352998840756*^9}, {3.774353035108843*^9, 
+   3.7743530696518297`*^9}, {3.7743531122551947`*^9, 3.774353334416415*^9}, {
+   3.774353404499661*^9, 3.7743535054587517`*^9}, {3.774353542968327*^9, 
+   3.7743535499963083`*^9}, {3.774353654227313*^9, 3.7743536626250753`*^9}, {
+   3.774353732325688*^9, 3.7743537363543587`*^9}, {3.774353915107852*^9, 
+   3.774354057198575*^9}, {3.774354115868351*^9, 3.774354244822427*^9}, {
+   3.774354282953817*^9, 3.774354376192294*^9}, {3.7743544337884808`*^9, 
+   3.77435447852402*^9}, {3.774354521846384*^9, 3.7743545370789433`*^9}, {
+   3.7743545830553303`*^9, 3.774354583307843*^9}, {3.7743546263340063`*^9, 
+   3.774354626771866*^9}, {3.774354658765019*^9, 3.7743547367628307`*^9}, {
+   3.774355922374591*^9, 3.7743559692932158`*^9}, {3.774356106607417*^9, 
+   3.774356116521082*^9}, {3.774356158631109*^9, 3.774356159059317*^9}, {
+   3.774356383689926*^9, 3.774356468939406*^9}, {3.774356556475374*^9, 
+   3.774356621072609*^9}, {3.7743566620794983`*^9, 3.7743567297080708`*^9}, {
+   3.774356766184306*^9, 3.774356801667663*^9}, {3.774356835793734*^9, 
+   3.774356951602947*^9}, {3.7743570081949253`*^9, 3.774357069897661*^9}, {
+   3.774357108736019*^9, 3.7743572005866337`*^9}, {3.774357244546083*^9, 
+   3.774357266732737*^9}, 3.774357298932263*^9, {3.774357331586585*^9, 
+   3.774357370170246*^9}, {3.7743574151912937`*^9, 3.774357422515955*^9}, {
+   3.7743574535266247`*^9, 3.774357508414751*^9}, {3.774357559460321*^9, 
+   3.774357618358286*^9}, {3.774357735451755*^9, 3.7743578830776157`*^9}, {
+   3.77435807605028*^9, 3.774358104399025*^9}, {3.774376159530706*^9, 
+   3.774376198737803*^9}, {3.7744394131798067`*^9, 3.774439420928595*^9}, {
+   3.774439518202312*^9, 3.774439518386661*^9}, {3.774638852161056*^9, 
+   3.774638877969713*^9}, {3.774638995325687*^9, 3.774639000632719*^9}, {
+   3.7746401000756474`*^9, 3.774640178615685*^9}, {3.774690493894174*^9, 
+   3.774690503712213*^9}},
+ EmphasizeSyntaxErrors->True,
+ CellLabel->"In[71]:=",ExpressionUUID->"e2a96332-6c67-4430-9300-0860ccbbe33f"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "DiscretizeGraphics","prng",
+   "\"Value of option PlotRange -> \\!\\(\\*RowBox[{\\\"{\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{\\\"Automatic\\\", \\\",\\\", \
+\\\"Automatic\\\"}], \\\"}\\\"}], \\\",\\\", RowBox[{\\\"{\\\", \
+RowBox[{\\\"Automatic\\\", \\\",\\\", \\\"Automatic\\\"}], \\\"}\\\"}], \\\",\
+\\\", RowBox[{\\\"{\\\", RowBox[{\\\"Automatic\\\", \\\",\\\", \
+\\\"Automatic\\\"}], \\\"}\\\"}]}], \\\"}\\\"}]\\) is not All, Full, \
+Automatic, a positive machine number, or an appropriate list of range \
+specifications.\"",2,103,15,28928082853566169722,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7743762008841553`*^9, 3.774439425851632*^9, 
+  3.77443952031606*^9, 3.774638883652772*^9, 3.774639001956313*^9, 
+  3.774690507444499*^9},
+ CellLabel->
+  "During evaluation of \
+In[71]:=",ExpressionUUID->"330bb330-11f2-4703-8545-b7b50b7c2719"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "DiscretizeGraphics","prng",
+   "\"Value of option PlotRange -> \\!\\(\\*RowBox[{\\\"{\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{\\\"Automatic\\\", \\\",\\\", \
+\\\"Automatic\\\"}], \\\"}\\\"}], \\\",\\\", RowBox[{\\\"{\\\", \
+RowBox[{\\\"Automatic\\\", \\\",\\\", \\\"Automatic\\\"}], \\\"}\\\"}], \\\",\
+\\\", RowBox[{\\\"{\\\", RowBox[{\\\"Automatic\\\", \\\",\\\", \
+\\\"Automatic\\\"}], \\\"}\\\"}]}], \\\"}\\\"}]\\) is not All, Full, \
+Automatic, a positive machine number, or an appropriate list of range \
+specifications.\"",2,103,16,28928082853566169722,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7743762008841553`*^9, 3.774439425851632*^9, 
+  3.77443952031606*^9, 3.774638883652772*^9, 3.774639001956313*^9, 
+  3.774690507518654*^9},
+ CellLabel->
+  "During evaluation of \
+In[71]:=",ExpressionUUID->"3a57c3cf-194d-44a0-b99f-3e279477ee3b"],
+
+Cell[BoxData[
+ TemplateBox[{TagBox[
+    DynamicModuleBox[{
+     TypeSystem`NestedGrid`PackagePrivate`$state$$ = 
+      Data`UnorderedAssociation[
+       "RowCount" -> 20, "Length" -> 5, "InitialType" -> 
+        TypeSystem`Struct[{"Status", "Image", "Size", "FileName", "Report"}, {
+          
+           TypeSystem`Atom[String], 
+           TypeSystem`Atom[Image], TypeSystem`AnyType, 
+           TypeSystem`Atom[File], TypeSystem`AnyType}], "Shape" -> 
+        TypeSystem`PackageScope`DocumentShape[
+          
+          Association[{"Status"} -> 
+           TypeSystem`PackageScope`AtomShape[96.00000000000001], {"Image"} -> 
+           TypeSystem`PackageScope`AtomShape[48], {"Size"} -> 
+           TypeSystem`PackageScope`UnknownShape, {"FileName"} -> 
+           TypeSystem`PackageScope`AtomShape[60], {"Report"} -> 
+           TypeSystem`PackageScope`UnknownShape], 1], "InitialData" -> 
+        TypeSystem`PackageScope`CacheHandle[1893404745], "Type" -> 
+        TypeSystem`Struct[{"Status", "Image", "Size", "FileName", "Report"}, {
+          
+           TypeSystem`Atom[String], 
+           TypeSystem`Atom[Image], TypeSystem`AnyType, 
+           TypeSystem`Atom[File], TypeSystem`AnyType}], "HandleQ" -> True, 
+        "RowTarget" -> 20, "Data" -> 
+        TypeSystem`PackageScope`CacheHandle[1893404745]], 
+      TypeSystem`NestedGrid`PackagePrivate`$path$$ = {}, 
+      TypeSystem`NestedGrid`PackagePrivate`$pos$$ = 1, 
+      TypeSystem`NestedGrid`PackagePrivate`$grid$$ = 
+      DynamicModule[{
+        TypeSystem`NestedGrid`PackagePrivate`renderedGrid = Deploy[
+           Style[
+            Grid[{{
+               Item[
+                Annotation[
+                 EventHandler[
+                  MouseAppearance[
+                   Mouseover[
+                    Pane[
+                    RawBoxes[
+                    StyleBox["\"Status\"", FontColor -> GrayLevel[0.4]]], {{
+                    20, Full}, 15}], 
+                    Style[
+                    Pane[
+                    RawBoxes[
+                    StyleBox[
+                    "\"Status\"", FontColor -> 
+                    RGBColor[
+                    0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], {{20, Full}, 15}], FontColor -> 
+                    RGBColor[
+                    0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
+                  TypeSystem`NestedGrid`PackagePrivate`updateState[
+                   TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 629300407][{
+                    
+                    Key["Status"]}]], 
+                 TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[629300407][
+                 
+                  GeneralUtilities`Slice[
+                   Key["Status"]]], "Mouse"], Background -> GrayLevel[0.95], 
+                Alignment -> {Left, Baseline}], 
+               Pane[
+                Annotation["Successful", 
+                 TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[629300407][
+                 
+                  GeneralUtilities`Slice[
+                   Key["Status"]]], "Mouse"], 
+                ImageSize -> {{96.00000000000001, Full}, Automatic}, 
+                Alignment -> {Left, Baseline}]}, {
+               Item[
+                Annotation[
+                 EventHandler[
+                  MouseAppearance[
+                   Mouseover[
+                    Pane[
+                    RawBoxes[
+                    StyleBox["\"Image\"", FontColor -> GrayLevel[0.4]]], {{
+                    20, Full}, 15}], 
+                    Style[
+                    Pane[
+                    RawBoxes[
+                    StyleBox[
+                    "\"Image\"", FontColor -> 
+                    RGBColor[
+                    0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], {{20, Full}, 15}], FontColor -> 
+                    RGBColor[
+                    0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
+                  TypeSystem`NestedGrid`PackagePrivate`updateState[
+                   TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 629300407][{
+                    
+                    Key["Image"]}]], 
+                 TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[629300407][
+                 
+                  GeneralUtilities`Slice[
+                   Key["Image"]]], "Mouse"], Background -> GrayLevel[0.95], 
+                Alignment -> {Left, Baseline}], 
+               Pane[
+                Annotation[
+                 RawBoxes[
+                  TemplateBox[{"\"  \"", 
+                    GraphicsBox[
+                    TagBox[
+                    RasterBox[CompressedData["
+1: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
+                    
+                    "], {{0, 50}, {50, 0}}, {0, 255}, ColorFunction -> 
+                    RGBColor], 
+                    BoxForm`ImageTag[
+                    "Byte", ColorSpace -> "RGB", Interleaving -> True], 
+                    Selectable -> False], DefaultBaseStyle -> "ImageGraphics",
+                     ImageSizeRaw -> {50, 50}, 
+                    PlotRange -> {{0, 50}, {0, 50}}]}, "RowDefault"]], 
+                 TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[629300407][
+                 
+                  GeneralUtilities`Slice[
+                   Key["Image"]]], "Mouse"], 
+                ImageSize -> {{48, Full}, Automatic}, 
+                Alignment -> {Left, Baseline}]}, {
+               Item[
+                Annotation[
+                 EventHandler[
+                  MouseAppearance[
+                   Mouseover[
+                    Pane[
+                    RawBoxes[
+                    StyleBox["\"Size\"", FontColor -> GrayLevel[0.4]]], {{
+                    20, Full}, 15}], 
+                    Style[
+                    Pane[
+                    RawBoxes[
+                    StyleBox[
+                    "\"Size\"", FontColor -> 
+                    RGBColor[
+                    0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], {{20, Full}, 15}], FontColor -> 
+                    RGBColor[
+                    0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
+                  TypeSystem`NestedGrid`PackagePrivate`updateState[
+                   TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 629300407][{
+                    
+                    Key["Size"]}]], 
+                 TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[629300407][
+                 
+                  GeneralUtilities`Slice[
+                   Key["Size"]]], "Mouse"], Background -> GrayLevel[0.95], 
+                Alignment -> {Left, Baseline}], 
+               Pane[
+                Annotation[
+                 Row[{
+                   Quantity[
+                    NumberForm[40.375, {
+                    DirectedInfinity[1], 1}], "Millimeters"], 
+                   Quantity[
+                    NumberForm[48.888888888888886`, {
+                    DirectedInfinity[1], 1}], "Millimeters"], 
+                   Quantity[50, "Millimeters"]}, " \[Times] "], 
+                 TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[629300407][
+                 
+                  GeneralUtilities`Slice[
+                   Key["Size"]]], "Mouse"], 
+                ImageSize -> {{60, Full}, Automatic}, 
+                Alignment -> {Left, Baseline}]}, {
+               Item[
+                Annotation[
+                 EventHandler[
+                  MouseAppearance[
+                   Mouseover[
+                    Pane[
+                    RawBoxes[
+                    StyleBox["\"FileName\"", FontColor -> GrayLevel[0.4]]], {{
+                    20, Full}, 15}], 
+                    Style[
+                    Pane[
+                    RawBoxes[
+                    StyleBox[
+                    "\"FileName\"", FontColor -> 
+                    RGBColor[
+                    0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], {{20, Full}, 15}], FontColor -> 
+                    RGBColor[
+                    0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
+                  TypeSystem`NestedGrid`PackagePrivate`updateState[
+                   TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 629300407][{
+                    
+                    Key["FileName"]}]], 
+                 TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[629300407][
+                 
+                  GeneralUtilities`Slice[
+                   Key["FileName"]]], "Mouse"], Background -> GrayLevel[0.95],
+                 Alignment -> {Left, Baseline}], 
+               Pane[
+                Annotation[
+                 File[
+                 "/Users/kahrendt/Documents/Hobbies/3d \
+Printing/Models/Math/Quadric Graphs/Double Cone.stl"], 
+                 TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[629300407][
+                 
+                  GeneralUtilities`Slice[
+                   Key["FileName"]]], "Mouse"], 
+                ImageSize -> {{60, Full}, Automatic}, 
+                Alignment -> {Left, Baseline}]}, {
+               Item[
+                Annotation[
+                 EventHandler[
+                  MouseAppearance[
+                   Mouseover[
+                    Pane[
+                    RawBoxes[
+                    StyleBox["\"Report\"", FontColor -> GrayLevel[0.4]]], {{
+                    20, Full}, 15}], 
+                    Style[
+                    Pane[
+                    RawBoxes[
+                    StyleBox[
+                    "\"Report\"", FontColor -> 
+                    RGBColor[
+                    0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], {{20, Full}, 15}], FontColor -> 
+                    RGBColor[
+                    0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
+                  TypeSystem`NestedGrid`PackagePrivate`updateState[
+                   TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 629300407][{
+                    
+                    Key["Report"]}]], 
+                 TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[629300407][
+                 
+                  GeneralUtilities`Slice[
+                   Key["Report"]]], "Mouse"], Background -> GrayLevel[0.95], 
+                Alignment -> {Left, Baseline}], 
+               Item[
+                Annotation[
+                 EventHandler[
+                  MouseAppearance[
+                   Mouseover["\[Ellipsis]", 
+                    Style[
+                    "\[Ellipsis]", FontColor -> 
+                    RGBColor[
+                    0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
+                  TypeSystem`NestedGrid`PackagePrivate`updateState[
+                   TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 629300407][{
+                    
+                    Key["Report"]}]], 
+                 TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[629300407][
+                 
+                  GeneralUtilities`Slice[
+                   Key["Report"]]], "Mouse"], BaseStyle -> {
+                  GrayLevel[0.5]}]}}, BaseStyle -> {ContextMenu -> {
+                 MenuItem["Copy position to clipboard", 
+                  KernelExecute[
+                   TypeSystem`NestedGrid`PackagePrivate`toCurrentPosition[
+                   TypeSystem`NestedGrid`PackagePrivate`copyClip]], 
+                  MenuEvaluator -> Automatic], 
+                 MenuItem["Copy data to clipboard", 
+                  KernelExecute[
+                   TypeSystem`NestedGrid`PackagePrivate`toCurrentData[
+                   TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`copyClip]], 
+                  MenuEvaluator -> Automatic], Delimiter, 
+                 MenuItem["Paste position in new cell", 
+                  KernelExecute[
+                   TypeSystem`NestedGrid`PackagePrivate`toCurrentPosition[
+                   TypeSystem`NestedGrid`PackagePrivate`cellPaste]], 
+                  MenuEvaluator -> Automatic], 
+                 MenuItem["Paste data in new cell", 
+                  KernelExecute[
+                   TypeSystem`NestedGrid`PackagePrivate`toCurrentData[
+                   TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`cellPaste]], 
+                  MenuEvaluator -> Automatic]}, FontFamily -> "Verdana", 
+               FontSize -> 12}, Alignment -> Left, RowMinHeight -> 1.5, 
+             Dividers -> All, FrameStyle -> GrayLevel[0.85], 
+             BaseStyle -> {FontFamily -> "Verdana", FontSize -> 12}], 
+            LineBreakWithin -> False, ContextMenu -> {}, NumberMarks -> False,
+             ShowAutoStyles -> False]], 
+         TypeSystem`NestedGrid`PackagePrivate`initialQ = True, 
+         TypeSystem`NestedGrid`PackagePrivate`self = $Failed}, 
+        Dynamic[
+         TypeSystem`NestedGrid`PackagePrivate`setupViewPath[
+         TypeSystem`NestedGrid`PackagePrivate`$path$$, If[
+            Not[TypeSystem`NestedGrid`PackagePrivate`initialQ], 
+            
+            Module[{TypeSystem`NestedGrid`PackagePrivate`tmpGrid$ = $Failed, 
+              TypeSystem`NestedGrid`PackagePrivate`tmpData$ = 
+              TypeSystem`NestedGrid`PackagePrivate`LookupCacheValue[
+                TypeSystem`NestedGrid`PackagePrivate`$state$$["Data"]]}, 
+             TypeSystem`NestedGrid`PackagePrivate`tmpGrid$ = 
+              If[TypeSystem`NestedGrid`PackagePrivate`tmpData$ === 
+                TypeSystem`NestedGrid`PackagePrivate`$NotCached, 
+                TypeSystem`NestedGrid`PackagePrivate`renderedGrid, 
+                TypeSystem`NestedGrid`PackagePrivate`renderGrid[
+                TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                 TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                 TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
+                 TypeSystem`NestedGrid`PackagePrivate`$grid$$, 629300407][
+                TypeSystem`NestedGrid`PackagePrivate`tmpData$]]; If[
+               Not[
+                FailureQ[TypeSystem`NestedGrid`PackagePrivate`tmpGrid$]], 
+               TypeSystem`NestedGrid`PackagePrivate`renderedGrid = 
+               TypeSystem`NestedGrid`PackagePrivate`tmpGrid$]; Null]]; 
+          TypeSystem`NestedGrid`PackagePrivate`initialQ = False; 
+          TypeSystem`NestedGrid`PackagePrivate`$pos$$; If[
+            FailureQ[TypeSystem`NestedGrid`PackagePrivate`renderedGrid], 
+            TypeSystem`SparseGrid[
+             TypeSystem`H["(data no longer present)"]], 
+            If[GeneralUtilities`$DebugMode, 
+             Row[{TypeSystem`NestedGrid`PackagePrivate`renderedGrid, "  ", 
+               TypeSystem`NestedGrid`PackagePrivate`formatState[
+               TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                TypeSystem`NestedGrid`PackagePrivate`$pos$$]}], 
+             TypeSystem`NestedGrid`PackagePrivate`renderedGrid]]], 
+         TrackedSymbols :> {TypeSystem`NestedGrid`PackagePrivate`$pos$$}], 
+        DynamicModuleValues :> {}], 
+      TypeSystem`NestedGrid`PackagePrivate`$posCell$$, 
+      TypeSystem`NestedGrid`PackagePrivate`$topBar$$ = Dynamic[
+        TypeSystem`NestedGrid`PackagePrivate`alignBar[
+        TypeSystem`NestedGrid`PackagePrivate`$state$$][
+         TypeSystem`NestedGrid`PackagePrivate`makeFramedBar[
+          TypeSystem`PackageScope`Pathbar[
+          TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+           TypeSystem`NestedGrid`PackagePrivate`updateState[
+           TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+            TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+            TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
+            TypeSystem`NestedGrid`PackagePrivate`$grid$$, 629300407]]]], 
+        TrackedSymbols :> {TypeSystem`NestedGrid`PackagePrivate`$path$$}], 
+      TypeSystem`NestedGrid`PackagePrivate`$bottomBar$$ = Framed[
+        Dynamic[
+         Replace[
+          MouseAnnotation[Null], {
+          TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[629300407][Null] -> 
+           "", TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[629300407][
+             Pattern[TypeSystem`NestedGrid`PackagePrivate`path, 
+              Blank[]]] :> (
+            TypeSystem`NestedGrid`PackagePrivate`$lastPath = 
+             TypeSystem`NestedGrid`PackagePrivate`path; 
+            TypeSystem`NestedGrid`PackagePrivate`makePathTrail[
+             TypeSystem`NestedGrid`PackagePrivate`path, 
+              TypeSystem`NestedGrid`PackagePrivate`makePathElements]), Null :> 
+           Spacer[10], Blank[] :> Spacer[10]}], TrackedSymbols :> {}], 
+        FrameStyle -> None, ImageMargins -> 0, FrameMargins -> 0, Alignment -> 
+        Top, ImageSize -> {Automatic, 14}]}, 
+     DynamicBox[
+      ToBoxes[
+       Column[
+        If[TypeSystem`NestedGrid`PackagePrivate`$path$$ == {}, {
+          TypeSystem`NestedGrid`PackagePrivate`displayScrollBar[
+          TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+           TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+           TypeSystem`NestedGrid`PackagePrivate`$pos$$], 
+          TypeSystem`NestedGrid`PackagePrivate`onDesktopShow[
+           TypeSystem`NestedGrid`PackagePrivate`alignBar[
+           TypeSystem`NestedGrid`PackagePrivate`$state$$][
+           TypeSystem`NestedGrid`PackagePrivate`$bottomBar$$]]}, {
+         TypeSystem`NestedGrid`PackagePrivate`$topBar$$, 
+          TypeSystem`NestedGrid`PackagePrivate`displayScrollBar[
+          TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+           TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+           TypeSystem`NestedGrid`PackagePrivate`$pos$$], 
+          TypeSystem`NestedGrid`PackagePrivate`onDesktopShow[
+           TypeSystem`NestedGrid`PackagePrivate`alignBar[
+           TypeSystem`NestedGrid`PackagePrivate`$state$$][
+           TypeSystem`NestedGrid`PackagePrivate`$bottomBar$$]]}], Spacings -> 
+        If[TypeSystem`NestedGrid`PackagePrivate`$path$$ == {}, 
+          0, {{}, {0, 0.05, 0}}]], StandardForm], 
+      ImageSizeCache -> {608., {84.134033203125, 89.865966796875}}, 
+      TrackedSymbols :> {
+       TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+        TypeSystem`NestedGrid`PackagePrivate`$grid$$}], 
+     BaseStyle -> {LineBreakWithin -> False}, Deinitialization :> 
+     TypeSystem`NestedGrid`PackagePrivate`deleteState[
+      TypeSystem`NestedGrid`PackagePrivate`$state$$], 
+     DynamicModuleValues :> {}, Initialization :> 
+     Block[{$ContextPath = $ContextPath}, 
+       Needs["TypeSystem`"]]], Deploy, DefaultBaseStyle -> "Deploy"]},
+  "CopyTag",
+  DisplayFunction->(#& ),
+  InterpretationFunction->("Dataset[<>]"& )]], "Output",
+ CellChangeTimes->{{3.7743571795418577`*^9, 3.7743572021788397`*^9}, 
+   3.774357267767329*^9, 3.7743574293584013`*^9, 3.774357515193981*^9, {
+   3.774357868274396*^9, 3.774357883910774*^9}, 3.7743581049566793`*^9, 
+   3.7743762170617228`*^9, 3.77443944273505*^9, 3.774439530592558*^9, 
+   3.774638892238615*^9, 3.774639008175335*^9, 3.774690513973277*^9},
+ CellLabel->
+  "Out[103]=",ExpressionUUID->"ca1c96cf-f571-4f09-a3b1-63ea98d8cfaa"]
+}, Open  ]],
+
+Cell[BoxData["\[IndentingNewLine]"], "Input",
+ CellChangeTimes->{
+  3.774295586342568*^9},ExpressionUUID->"fc2c2432-0153-4f55-9d33-\
+d1fb4c0b4f6e"]
+},
+WindowSize->{808, 763},
+WindowMargins->{{Automatic, -44}, {Automatic, 18}},
+FrontEndVersion->"12.0 for Mac OS X x86 (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 27376, 678, 1942, "Input",ExpressionUUID->"e2a96332-6c67-4430-9300-0860ccbbe33f"],
+Cell[27959, 702, 908, 17, 42, "Message",ExpressionUUID->"330bb330-11f2-4703-8545-b7b50b7c2719"],
+Cell[28870, 721, 908, 17, 42, "Message",ExpressionUUID->"3a57c3cf-194d-44a0-b99f-3e279477ee3b"],
+Cell[29781, 740, 23480, 455, 193, "Output",ExpressionUUID->"ca1c96cf-f571-4f09-a3b1-63ea98d8cfaa"]
+}, Open  ]],
+Cell[53276, 1198, 147, 3, 52, "Input",ExpressionUUID->"fc2c2432-0153-4f55-9d33-d1fb4c0b4f6e"]
+}
+]
+*)
+

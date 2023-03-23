@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+  <head>
+  <title>
+    
+      Approximating Dew Point in ESPHome | Kevin Ahrendt
+    
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/syntax.css">
+  <!-- Use Atom -->
+  <link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Kevin Ahrendt" />
+  <!-- RSS-v2.0
+  <link href="/rss-feed.xml" type="application/rss+xml" rel="alternate" title="Kevin Ahrendt | A personal website for 3D printing, mathematics, data science, and home automation."/>
+  //-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Source+Code+Pro">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+  <!-- Google Analytics -->
+  <!-- <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+ -->
+  <!-- Use Jekyll SEO plugin -->
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Approximating Dew Point in ESPHome | Kevin Ahrendt</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Approximating Dew Point in ESPHome" />
+<meta name="author" content="Kevin Ahrendt" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A dew point is a practical measure of moisture in the air that is a good proxy for occupant comfort. It is better to determine if a space feels “muggy” than relative humidity. The dew point is the air temperature, assuming the amount of water vapor in the air remains constant, in which the relative humidity of the air would be 100%. If the temperature decreases to be less than the dew point, water will condense on surfaces [2]. Another way to quantify the absolute quantity of moisture in the air is to use absolute humidity, but it is arguably easier to interpret a dew point has the same units as a regular temperature measurement." />
+<meta property="og:description" content="A dew point is a practical measure of moisture in the air that is a good proxy for occupant comfort. It is better to determine if a space feels “muggy” than relative humidity. The dew point is the air temperature, assuming the amount of water vapor in the air remains constant, in which the relative humidity of the air would be 100%. If the temperature decreases to be less than the dew point, water will condense on surfaces [2]. Another way to quantify the absolute quantity of moisture in the air is to use absolute humidity, but it is arguably easier to interpret a dew point has the same units as a regular temperature measurement." />
+<meta property="og:site_name" content="Kevin Ahrendt" />
+<meta property="og:image" content="/thermometer-water.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-20T00:00:00-04:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="/thermometer-water.png" />
+<meta property="twitter:title" content="Approximating Dew Point in ESPHome" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kevin Ahrendt"},"dateModified":"2022-07-20T00:00:00-04:00","datePublished":"2022-07-20T00:00:00-04:00","description":"A dew point is a practical measure of moisture in the air that is a good proxy for occupant comfort. It is better to determine if a space feels “muggy” than relative humidity. The dew point is the air temperature, assuming the amount of water vapor in the air remains constant, in which the relative humidity of the air would be 100%. If the temperature decreases to be less than the dew point, water will condense on surfaces [2]. Another way to quantify the absolute quantity of moisture in the air is to use absolute humidity, but it is arguably easier to interpret a dew point has the same units as a regular temperature measurement.","headline":"Approximating Dew Point in ESPHome","image":"/thermometer-water.png","mainEntityOfPage":{"@type":"WebPage","@id":"/approximating-dew-point"},"url":"/approximating-dew-point"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+  <body>
+    <div class="container">
+      <header class="site-header">
+  <h3 class="site-title">
+    <a href="/">Kevin Ahrendt</a>
+  </h3>
+  <nav class="menu-list">
+    
+      <a href="/3d-printing" class="menu-link">3D Printing</a>
+    
+      <a href="/programming" class="menu-link">Programming</a>
+    
+      <a href="/smart-home" class="menu-link">Smart Home Data</a>
+    
+      <a href="/academics" class="menu-link">Academics</a>
+    
+      <a href="/about-me" class="menu-link">About Me</a>
+    
+      <a href="/contact" class="menu-link">Contact</a>
+    
+    
+  </nav>
+  <div class="dropdown">
+    <button class="dropbtn"><i class="fa fa-bars" aria-hidden="true"></i></button>
+    <div class="dropdown-content">
+      
+        <a href="/3d-printing" class="menu-link">3D Printing</a>
+      
+        <a href="/programming" class="menu-link">Programming</a>
+      
+        <a href="/smart-home" class="menu-link">Smart Home Data</a>
+      
+        <a href="/academics" class="menu-link">Academics</a>
+      
+        <a href="/about-me" class="menu-link">About Me</a>
+      
+        <a href="/contact" class="menu-link">Contact</a>
+      
+      
+    </div>
+  </div>
+</header>
+
+      <div class="content-wrapper">
+        <div class="post-content">
+  <h1>
+    Approximating Dew Point in ESPHome
+  </h1>
+  
+    <span class="post-date">
+  Written on
+  
+  July
+  20th,
+  2022
+  by
+  
+    Kevin Ahrendt
+  
+</span>
+
+  
+  
+    <div class="featured-image">
+      <img src="/assets/img/thermometer-water.png">
+    </div>
+  
+  <article>
+    <p>A dew point is a practical measure of moisture in the air that is a good proxy for occupant comfort. It is better to determine if a space feels “muggy” than relative humidity. The dew point is the air temperature, assuming the amount of water vapor in the air remains constant, in which the relative humidity of the air would be 100%. If the temperature decreases to be less than the dew point, water will condense on surfaces <a class="citation" href="#nws-dewpoint_vs_humidity">[1]</a>. Another way to quantify the absolute quantity of moisture in the air is to use <a href="https://esphome.io/components/sensor/absolute_humidity.html">absolute humidity</a>, but it is arguably easier to interpret a dew point has the same units as a regular temperature measurement.</p>
+
+<p>Unfortunately, cheap, readily available electronic sensors that measure dew point directly are unavailable. However, we can approximate the dew point temperature relatively quickly and accurately by knowing the relative humidity and air temperature, which many sensors make available! As a note, there are many ways to approximate the dew point. However, we will base our approximation on a calculation that uses the Magnus formula described in <a class="citation" href="#sensirion-dew_point_calculation">[2]</a>.</p>
+
+<p>The dew point temperature \( T_{dp} \) (in \( ^\circ \text{C} \)) is approximated by</p>
+
+\[T_{dp} \left( T, RH \right) = \frac{\lambda\left( \ln\left(\frac{RH}{100}\right) + \frac{\beta T}{\lambda+T} \right)}{\beta-\left( \ln\left(\frac{RH}{100}\right) + \frac{\beta T}{\lambda+T} \right)},\]
+
+<p>where \( T \) is the ambient temperature in \( ^\circ \text{C} \), \( RH \) is the relative humidity (as a number between 0 and 100), \( \alpha = 6.112 \text{hPa} \), \( \beta = 17.62 \), and \( \lambda = 243.12 ^\circ \text{C} \). In our equivalent C++ implementation, we use a temporary variable of</p>
+
+\[H(T,RH) = \ln\left(\frac{RH}{100}\right) + \frac{\beta T}{\lambda+T},\]
+
+<p>and return the dew point in \(^\circ \text{C}\) with</p>
+
+\[T_{dp}(H) = \frac{\lambda H}{\beta - H}.\]
+
+<p>Since I use ESPHome to control my sensors, the ESP32 will calculate the dew point directly on the device using a template sensor. The following template sensor assumes there are separate humidity and temperature sensors with an ESPHome id of “humidity” and “temperature” respectively.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sensor:
+  - platform: template
+    name: "${upper_device_name} Dew Point"
+    id: dewPoint
+    update_interval: 30s
+    device_class: temperature
+    unit_of_measurement: "°C"
+    accuracy_decimals: 0                                # formula is uncertain up to 0.35 degrees C = 0.63 degrees F for usual indoor temperatures
+    lambda: |- 
+        const float alpha = 6.112;                      // (hPa)
+        const float beta = 17.62;
+        const float lambda = 243.12;                    // (degrees C)
+
+        float RH = id(humidity).raw_state;              // Relative Humidity
+        float T = id(temperature).raw_state;            // Temperature in (degrees C)
+
+        float H = log( RH/100 ) + beta*T/(lambda+T);
+        return (lambda)*H/(beta - H);
+</code></pre></div></div>
+
+<h1 id="references">References</h1>
+<ol class="bibliography"><li><span id="nws-dewpoint_vs_humidity">1. Service USNW Dew point vs. Humidity. Available at: https://www.weather.gov/arx/why_dewpoint_vs_humidity.</span></li>
+<li><span id="sensirion-dew_point_calculation">2. Application Note: Dew-Point Calculation Sensirion AG.</span></li></ol>
+
+  </article>
+  
+  
+  
+</div>
+
+      </div>
+      <footer class="footer">
+  
+  <div class="footer-description"><a href="/">Kevin Ahrendt | A personal website for 3D printing, mathematics, data science, and home automation.</a></div>
+</footer>
+
+    </div>
+  </body>
+</html>
