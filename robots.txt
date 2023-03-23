@@ -1,1 +1,1 @@
-Sitemap: /sitemap.xml
+Sitemap: https://kahrendt.github.io/kahrendt/sitemap.xml
