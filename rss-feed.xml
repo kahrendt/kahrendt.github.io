@@ -7,7 +7,21 @@
 		<atom:link href="/rss-feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
-				<title>Approximating Dew Point in ESPHome</title>
+				<title>Standard Deviation Filter for ESPHome</title>
+				
+					<dc:creator>Kevin Ahrendt</dc:creator>
+				
+				
+					<description>&lt;p&gt;The &lt;a href=&quot;https://en.wikipedia.org/wiki/Standard_deviation&quot;&gt;standard deviation&lt;/a&gt; of a set of sensor readings measures the variation in the sensor’s observations. A standard deviation close to zero implies the sensor observations tend to be near the mean/average of all observations. In other words, the measurements are consistent and not dispersed. A standard deviation much larger than zero implies the opposite. In other words, the observations are dispersed and not consistent. If we compute the standard deviation from the set of measurements from a sensor, we can determine whether or not those observations are consistent.&lt;/p&gt;
+</description>
+				
+				<pubDate>Fri, 24 Mar 2023 00:00:00 -0400</pubDate>
+				<link>/standard-deviation-esphome</link>
+				<guid isPermaLink="true">/standard-deviation-esphome</guid>
+			</item>
+		
+			<item>
+				<title>Approximating Dew Points in ESPHome</title>
 				
 					<dc:creator>Kevin Ahrendt</dc:creator>
 				
@@ -16,8 +30,8 @@
 </description>
 				
 				<pubDate>Wed, 20 Jul 2022 00:00:00 -0400</pubDate>
-				<link>/approximating-dew-point</link>
-				<guid isPermaLink="true">/approximating-dew-point</guid>
+				<link>/approximating-dew-points</link>
+				<guid isPermaLink="true">/approximating-dew-points</guid>
 			</item>
 		
 			<item>
