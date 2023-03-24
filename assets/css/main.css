@@ -361,11 +361,12 @@ pre code {
 .featured-post {
   height: 200px;
   margin: 5px 10px 10px;
-  background: rgb(1, 1, 1); /* fallback color */
+  background: rgb(255, 255, 255); /* fallback color */
   background: rgba(0, 0, 0, 0.1);
   background-position: right;
   background-repeat: no-repeat;
   background-size: contain;
+  background-size: 200px auto;
   position: relative;
 }
 
