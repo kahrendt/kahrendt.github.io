@@ -1,4 +1,196 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2023-03-24T15:52:32-04:00</updated><id>/feed.xml</id><title type="html">Kevin Ahrendt</title><subtitle>A personal website for 3D printing, mathematics, data science, and home automation.</subtitle><author><name>Kevin Ahrendt</name></author><entry><title type="html">Standard Deviation Filter for ESPHome</title><link href="/standard-deviation-esphome" rel="alternate" type="text/html" title="Standard Deviation Filter for ESPHome" /><published>2023-03-24T00:00:00-04:00</published><updated>2023-03-24T00:00:00-04:00</updated><id>/standard-deviation-esphome</id><content type="html" xml:base="/standard-deviation-esphome"><![CDATA[<p>The <a href="https://en.wikipedia.org/wiki/Standard_deviation">standard deviation</a> of a set of sensor readings measures the variation in the sensor’s observations. A standard deviation close to zero implies the sensor observations tend to be near the mean/average of all observations. In other words, the measurements are consistent and not dispersed. A standard deviation much larger than zero implies the opposite. In other words, the observations are dispersed and not consistent. If we compute the standard deviation from the set of measurements from a sensor, we can determine whether or not those observations are consistent.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2023-03-26T15:44:22-04:00</updated><id>/feed.xml</id><title type="html">Kevin Ahrendt</title><subtitle>A personal website for 3D printing, mathematics, data science, and home automation.</subtitle><author><name>Kevin Ahrendt</name></author><entry><title type="html">Quantifying New Exhaust Fan Performance with Data from ESPHome</title><link href="/quantifying-new-exhaust-fan" rel="alternate" type="text/html" title="Quantifying New Exhaust Fan Performance with Data from ESPHome" /><published>2023-03-26T00:00:00-04:00</published><updated>2023-03-26T00:00:00-04:00</updated><id>/quantifying-new-exhaust-fan</id><content type="html" xml:base="/quantifying-new-exhaust-fan"><![CDATA[<h2 id="introduction">Introduction</h2>
+
+<p>Our home’s original master bathroom exhaust fan could not remove all excess moisture when showering. The mirror would fog over almost completely, and water would condense on the walls near the ceiling. We replaced the fan, and I wanted to quantify and test whether the new fan was an improvement. I gathered summary statistics from an air velocity sensor placed under the closed bathroom door using ESPHome. I then used a T-test to determine whether the changes indicated an improvement. The new fan and ducting show a statistically significant improvement, and (most importantly) moisture does not accumulate.</p>
+
+<p>The bathroom is 83 square feet, and the previous exhaust fan was rated to exhaust 50 cubic feet of air per minute. While this meets the <a href="https://codes.iccsafe.org/content/NYSRC2020P1/chapter-15-exhaust-systems#NYSRC2020P1_Pt05_Ch15_SecM1505.4.4">local Residential Code</a>, a common <a href="https://www.hvi.org/resources/publications/bathroom-exhaust-fans/">rule of thumb</a> recommends 1 CFM per square foot. We replaced the old bathroom fan with a <a href="https://na.panasonic.com/us/home-and-building-solutions/ventilation-indoor-air-quality/ventilation-fans/whisperfitr-dc-fan-50-80-110-cfm">Panasonic FV-0511VF1</a>. While this was an improvement compared to the original fan, it still did not eliminate the moisture issues. We improved the fan’s performance by straightening out the duct in the attic instead of immediately making a sharp turn in the attic. We then replaced the previous 3-inch ducting with an insulated 4-inch duct while also properly terminating the duct with an <a href="https://na.panasonic.com/us/home-and-building-solutions/ventilation-indoor-air-quality/ventilation-accessories/ezsoffit-venttm-soffit-termination-system">appropriate vent</a>. For comparison, the old duct end simply rested on the vinyl soffit. Finally, we increased the exhaust rate setting on the new fan from 50 CFM to 110 CFM, eliminating the moisture build-up.</p>
+
+<h2 id="experiment-setup">Experiment Setup</h2>
+
+<p>I used an <a href="https://www.sparkfun.com/products/18377">FS3000 air velocity sensor</a> to quantify the exhaust rate with each change to the setup. I placed the air velocity sensor under the closed bathroom door and turned on the fan. I wrote a custom component to interface the sensor with ESPHome to easily collect the data. (My pull request has since been accepted, and ESPHome now supports the <a href="https://esphome.io/components/sensor/fs3000.html">sensor natively</a>.) The sensor measured the air velocity once per second. Additionally, I calculated the standard deviation over 60 measurements (1 minute) of the air velocities using the filter code detailed in this <a href="/standard-deviation-esphome">post</a>. I also collected the minimum, maximum, and average air velocity over the previous 60 measurements using built-in <a href="https://esphome.io/components/sensor/index.html#sensor-filters">ESPHome sensor filters</a>. See the <a href="#ESPHome-Sensor-YAML">ESPHome Sensor YAML section</a> section at the end of this post for the specific configuration details. After waiting several minutes to ensure the fans were up to full speed, I recorded the data.</p>
+
+<p><img src="assets/img/exhaust-fan/velocity_sensor_door_closed_wide.jpg" alt="FS3000 velocity sensor in door-frame" />
+<em>FS3000 sensor placed under the door. Also pictured is a <a href="https://www.sparkfun.com/products/16988">Qwiicbus endpoint</a> to use an ethernet cable for I2C communication.</em></p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>We use the measured air velocity underneath the bathroom door as a proxy for the amount of air the bathroom fan exhausts. Replacing the old bathroom fan with the Panasonic fan resulted in a significant improvement without modifying the ducting. Straightening the duct also resulted in a significant increase in the amount of air exhausted.</p>
+
+<p>Replacing the 3-inch duct without termination with a 4-inch duct terminated with a soffit vent reduced the air exhausted by a statistically significant amount. The decrease is minimal in practice, resulting in an average under-door velocity decrease of only 0.04, or a 4.3% reduction. While the larger duct, in theory, should improve the amount of air exhausted, it appears that the soffit vent termination causes the reduction. This fan increases its power to counteract duct resistance to achieve the set CFM level. Since the duct length is short (approximately 3 feet), the fan seems to be able to compensate for the difference between a 3-inch duct and a 4-inch duct. Replacing the duct and terminating it with a vent reduced the fan’s noise significantly, which indicates that the fan did not need to work as hard despite having the soffit vent present. This reduction is acceptable, as no ducting termination is problematic long-term for the house’s structure. Previously, the moist air was not fully exhausted, as a large fraction of moisture remained in the attic. Before terminating the duct, a humidity sensor in the attic showed an increase whenever the exhaust fan ran during a shower. After adding the terminating vent, there is no increase in attic humidity levels when the fan runs during a shower.</p>
+
+<p>Finally, as expected, increasing the fan’s setting to 110 CFM from 50 CFM resulted in a significant improvement. At 110 CFM, this exceeds the rule-of-thumb of having 1 CFM per square foot. When set to the 50 CFM setting with the new fan and ducting, we still experienced mirror fogging and moisture condensing on the walls. After changing the setting, this is no longer a problem.</p>
+
+<h2 id="data">Data</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th style="text-align: center"><strong>Average</strong> \(\left(\frac{\text{m}}{\text{s}}\right)\)</th>
+      <th style="text-align: center"><strong>Minimum</strong> \(\left(\frac{\text{m}}{\text{s}}\right)\)</th>
+      <th style="text-align: center"><strong>Maximum</strong> \(\left(\frac{\text{m}}{\text{s}}\right)\)</th>
+      <th style="text-align: center"><strong>Standard Deviation</strong> \(\left(\frac{\text{m}}{\text{s}}\right)\)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Fan Off</strong></td>
+      <td style="text-align: center">0.02</td>
+      <td style="text-align: center">0.00</td>
+      <td style="text-align: center">0.04</td>
+      <td style="text-align: center">0.01</td>
+    </tr>
+    <tr>
+      <td><strong>Old Exhaust Fan</strong><br />50 CFM<br />3 inch duct, kinked<br />no soffit termination</td>
+      <td style="text-align: center">0.66</td>
+      <td style="text-align: center">0.62</td>
+      <td style="text-align: center">0.66</td>
+      <td style="text-align: center">0.01</td>
+    </tr>
+    <tr>
+      <td><strong>New Exhaust Fan</strong><br />50 CFM<br />3 inch duct, kinked<br />no soffit termination</td>
+      <td style="text-align: center">0.77</td>
+      <td style="text-align: center">0.74</td>
+      <td style="text-align: center">0.81</td>
+      <td style="text-align: center">0.03</td>
+    </tr>
+    <tr>
+      <td><strong>New Fan<br />50 CFM</strong><br />3 inch duct, straightened<br />no soffit termination</td>
+      <td style="text-align: center">0.92</td>
+      <td style="text-align: center">0.86</td>
+      <td style="text-align: center">0.99</td>
+      <td style="text-align: center">0.03</td>
+    </tr>
+    <tr>
+      <td><strong>New Fan<br />50 CFM</strong><br />4 inch duct<br />terminated with soffit vent</td>
+      <td style="text-align: center">0.88</td>
+      <td style="text-align: center">0.86</td>
+      <td style="text-align: center">0.91</td>
+      <td style="text-align: center">0.01</td>
+    </tr>
+    <tr>
+      <td><strong>New Fan<br />110 CFM</strong><br />4 inch duct<br />terminated with soffit vent</td>
+      <td style="text-align: center">1.51</td>
+      <td style="text-align: center">1.48</td>
+      <td style="text-align: center">1.58</td>
+      <td style="text-align: center">0.02</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="statistical-testing">Statistical Testing</h2>
+
+<p>Due to this project taking a long time, I collected most of these summary statistics on different days with different ambient weather conditions. There could have been a more pronounced natural draft, but I only gathered the first three rows of data on the same day. I did not account for this potential confounding factor.</p>
+
+<p>We use a one-sided, two-sample <a href="https://en.wikipedia.org/wiki/Student%27s_t-test">T-test</a> comparing the difference between the mean air velocities to test whether there are significant increases or decreases after changing the setup. The sample size is 60, as the summary statistics reflect a 60-observation sliding window. The T-test helps us determine whether there is evidence to support if the upgrades increased the air velocity underneath the door. We assume the measured air velocities follow a normal distribution when using a T-test, which may not be appropriate. A better approach is to record the observed air velocities for all 60 measurements instead of the summary statistics. Then, we would use a <a href="https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test">Kolmogorov-Smirnov test</a>, which does not assume the samples’ observations follow a specific distribution.</p>
+
+<p>Comparing the Old Exhaust Fan sample with the New Exhaust Fan sample with the same rated 50 CFM and kinked 3-inch duct, we get a p-value of less than 0.0001. There is strong evidence that the new exhaust fan resulted in a higher under-door air velocity.</p>
+
+<p>Comparing the samples for New Exhaust Fan with the 3-inch duct kinked or straightened, we get a p-value of less than 0.0001. This is strong evidence that straightening the duct increased under-door air velocity.</p>
+
+<p>Comparing the samples for the New Exhaust Fan with a straightened 3-inch duct without termination versus a 4-inch duct with soffit termination, we get a p-value of less than 0.0001. There is strong evidence that replacing the 3-inch duct without termination with a 4-inch duct with a vent termination reduced the under-door air velocity.</p>
+
+<p>Comparing the samples for the New Exhaust fan set to 50 CFM versus 110 CFM, the p-value is less than 0.0001. This is strong evidence that the fan setting modification increased the under-door air velocity.</p>
+
+<h2 id="photos">Photos</h2>
+
+<p><img src="assets/img/exhaust-fan/old_exhaust_fan.jpg" alt="Old exhaust fan in attic" />
+<em>The old exhaust fan with insulation cleared. The kink in the exhaust duct was present before the insulation was pulled aside and after putting it back.</em></p>
+
+<p><img src="assets/img/exhaust-fan/no_duct_termination.jpg" alt="Exhaust duct from attic" />
+<em>The old 3 inch duct without any kinks. It has no termination in the soffit bay.</em></p>
+
+<h2 id="esphome-sensor-yaml">ESPHome Sensor YAML</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sensor:
+  - platform: fs3000
+    name: "Velocity"
+    id: velocity_mps
+    i2c_id: qwik_bus
+    model: 1005
+    update_interval: 1s
+  - platform: copy
+    name: "Velocity Average (1 min)"
+    source_id: velocity_mps
+    filters:
+      - sliding_window_moving_average:
+          window_size: 60
+          send_every: 15
+  - platform: copy
+    name: "Velocity Maximum (1 min)"
+    source_id: velocity_mps
+    filters:
+      - max:
+          window_size: 60
+          send_every: 15
+  - platform: copy
+    name: "Velocity Minimum (1 min)"
+    source_id: velocity_mps
+    filters:
+      - min:
+          window_size: 60
+          send_every: 15                 
+  - platform: copy
+    name: "Velocity Standard Deviation (1 min)"
+    source_id: velocity_mps
+    filters:
+      - lambda: |-
+          // max measurements to store for computing standard deviation
+          const uint8_t window_size_ = 60;
+          // compute and send the standard deviation after this many measurements
+          const uint8_t send_every_ = 15; 
+
+          static std::deque&lt;float&gt; queue_;
+          static uint8_t send_at_ = 0;
+          
+          // If we have more entries in queue_ than the window_size_, 
+          // then pop them off
+          while (queue_.size() &gt;= window_size_) {
+            queue_.pop_front();
+          }
+
+          // add the newest reading to queue_
+          queue_.push_back(x);
+
+          if (++send_at_ &gt;= send_every_) {
+            send_at_ = 0;
+
+            float Ex = 0.0;
+            float Ex2 = 0.0;
+            size_t count = 0;
+
+            float K = queue_.front();
+            
+            for (auto v: queue_) {
+              if (!std::isnan(v)) {
+                // Welford's algorithm to avoid catostrophic cancellation
+                //  - This is achieved by subtracting the oldest reading from 
+                //    each measurement. If not done, then the sum of the 
+                //    measurements squared and the square of the measurements 
+                //    summed may be quite large, and their difference can be 
+                //    problematic resulting in catostrophic cancellation
+
+                // counts valid measurements
+                count += 1;
+                // sums the measurement minus the oldest reading
+                Ex += v - K;
+                 // sums the measurement minus the oldest reading squared
+                Ex2 += pow(v-K,2);
+              }
+            }
+
+            float standard_deviation = NAN;
+            // If we have at least one valid reading, then compute the 
+            // variance and standard deviation, otherwise it will remain NAN
+            if (count) {
+              float variance = (Ex2 - pow(Ex, 2)/count) / (count-1);
+              // standard deviation is the square root of the variance
+              standard_deviation = sqrt(variance); 
+            }
+
+            return standard_deviation;
+          }
+          return {};
+</code></pre></div></div>]]></content><author><name>Kevin Ahrendt</name></author><category term="programming" /><category term="smart-home" /><category term="esphome" /><category term="statistics" /><category term="data" /><summary type="html"><![CDATA[Introduction]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/exhaust-fan/velocity_sensor_door_open.jpg" /><media:content medium="image" url="/exhaust-fan/velocity_sensor_door_open.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Standard Deviation Filter for ESPHome</title><link href="/standard-deviation-esphome" rel="alternate" type="text/html" title="Standard Deviation Filter for ESPHome" /><published>2023-03-24T00:00:00-04:00</published><updated>2023-03-24T00:00:00-04:00</updated><id>/standard-deviation-esphome</id><content type="html" xml:base="/standard-deviation-esphome"><![CDATA[<p>The <a href="https://en.wikipedia.org/wiki/Standard_deviation">standard deviation</a> of a set of sensor readings measures the variation in the sensor’s observations. A standard deviation close to zero implies the sensor observations tend to be near the mean/average of all observations. In other words, the measurements are consistent and not dispersed. A standard deviation much larger than zero implies the opposite. In other words, the observations are dispersed and not consistent. If we compute the standard deviation from the set of measurements from a sensor, we can determine whether or not those observations are consistent.</p>
 
 <p>The following code for ESPHome uses a <a href="https://esphome.io/components/sensor/index.html#lambda">custom lambda filter</a> to compute the standard deviation of measurements from a sensor. It applies the filter to a <a href="https://esphome.io/components/copy.html">copy integration</a> sensor, which requires another defined sensor with a designated id. We could apply the lambda filter directly to a sensor itself, but then ESPHome would send only the standard deviation of the measurements to Home Assistant and not the actual measurement value. The parameters <code class="language-plaintext highlighter-rouge">window_size_</code> and <code class="language-plaintext highlighter-rouge">send_every_</code> correspond to the configuration values <code class="language-plaintext highlighter-rouge">window_size</code> and <code class="language-plaintext highlighter-rouge">send_every</code> for any of the built-in ESPHome sensor filters.</p>
 
@@ -123,21 +315,7 @@
   <li>Elliptic Paraboloid Surface: <a href="assets/3d-models/hyperbolic_paraboloid/Elliptic_Paraboloid.stl">Elliptic_Paraboloid.stl</a></li>
   <li>Double Cone Surface: <a href="assets/3d-models/hyperbolic_paraboloid/Double_Cone.stl">Double_Cone.stl</a></li>
   <li>Mathematica Notebook: <a href="assets/3d-models/hyperbolic_paraboloid/Quadrics.nb">Quadrics.nb</a></li>
-</ul>]]></content><author><name>Kevin Ahrendt</name></author><category term="3d-printing" /><category term="3d printing" /><category term="mathematics" /><category term="teaching" /><summary type="html"><![CDATA[Description: These are models for several quadric surfaces that are useful for Multivariable Calculus classes. The surfaces include raised bumps representing traces. The models allow students to make the connection between the abstract formula/2D pictures to the actual surface in 3D. I have also inclued an in-classroom activity that I used when teaching Multivariable Calculus. Each group was given a printed version of the hyperbolic paraboloid surface, and then they worked through the questions on the activity together.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/print-hyperbolic-paraboloid.jpg" /><media:content medium="image" url="/print-hyperbolic-paraboloid.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Discrete Fractional Difference of Quadratic Function</title><link href="/discrete_quadratic_print" rel="alternate" type="text/html" title="Discrete Fractional Difference of Quadratic Function" /><published>2019-08-05T00:00:00-04:00</published><updated>2019-08-05T00:00:00-04:00</updated><id>/discrete_quadratic_print</id><content type="html" xml:base="/discrete_quadratic_print"><![CDATA[<h2 id="description">Description:</h2>
-<p>This is a three dimensional graph of the discrete function \((x+1)(x)\) defined on the natural numbers. This is an analogue to the quadratic function in the nabla discrete calculus; in particular, this function is known as the rising function. One axis represents the continuous order of the Riemann-Liouville fractional difference ranging from 0 to 2. The \(x\)-axis ranges in discrete steps from 1 to 7. The zeroth order difference, given by \((x+1)(x)\), the first difference, given by \(2x+1\), and the second difference, given by \(2\) are highlighted with a ridge. The Riemann-Liouville fractional difference is continuous with the respect to the order of the difference, so the transition between the zeroth, first, and second difference to the fractional differences in between results in a smooth graph in each discrete x-value.</p>
-
-<h2 id="design-process">Design process:</h2>
-<p>I used Mathematica to generate the graph using the included Mathematica code. Then I used Slic3r to scale the Mathematica output to be \(80\times80\times80\) \(\text{mm}^3\) (as well as let it correct some errors in the stl file). Finally, I used Fusion 360 to design the stand.</p>
-
-<h2 id="post-print-finishing">Post-print finishing:</h2>
-<p>If desired, use a few drops of super glue to attach the surface to the stand.</p>
-
-<h2 id="files">Files</h2>
-<ul>
-  <li>Continous fractional derivative of the exponential function: <a href="assets/3d-models/discrete_quadratic/Graph_Discrete_Quadratic.stl">Graph_Discrete_Quadratic.stl</a></li>
-  <li>Stand: <a href="assets/3d-models/discrete_quadratic/Graph_Discrete_Quadratic_Stand.stl">Graph_Discrete_Quadratic_Stand.stl</a></li>
-  <li>Mathematica Notebook: <a href="assets/3d-models/discrete_quadratic/Graph_Discrete_Quadratic.nb">Graph_Discrete_Quadratic.nb</a></li>
-</ul>]]></content><author><name>Kevin Ahrendt</name></author><category term="3d-printing" /><category term="3d printing" /><category term="mathematics" /><summary type="html"><![CDATA[Description: This is a three dimensional graph of the discrete function \((x+1)(x)\) defined on the natural numbers. This is an analogue to the quadratic function in the nabla discrete calculus; in particular, this function is known as the rising function. One axis represents the continuous order of the Riemann-Liouville fractional difference ranging from 0 to 2. The \(x\)-axis ranges in discrete steps from 1 to 7. The zeroth order difference, given by \((x+1)(x)\), the first difference, given by \(2x+1\), and the second difference, given by \(2\) are highlighted with a ridge. The Riemann-Liouville fractional difference is continuous with the respect to the order of the difference, so the transition between the zeroth, first, and second difference to the fractional differences in between results in a smooth graph in each discrete x-value.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/print-discrete-quadratic.jpg" /><media:content medium="image" url="/print-discrete-quadratic.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Continuous Fractional Derivative of Quadratic Function</title><link href="/continuous_quadratic_print" rel="alternate" type="text/html" title="Continuous Fractional Derivative of Quadratic Function" /><published>2019-08-05T00:00:00-04:00</published><updated>2019-08-05T00:00:00-04:00</updated><id>/continuous_quadratic_print</id><content type="html" xml:base="/continuous_quadratic_print"><![CDATA[<h2 id="description">Description:</h2>
+</ul>]]></content><author><name>Kevin Ahrendt</name></author><category term="3d-printing" /><category term="3d printing" /><category term="mathematics" /><category term="teaching" /><summary type="html"><![CDATA[Description: These are models for several quadric surfaces that are useful for Multivariable Calculus classes. The surfaces include raised bumps representing traces. The models allow students to make the connection between the abstract formula/2D pictures to the actual surface in 3D. I have also inclued an in-classroom activity that I used when teaching Multivariable Calculus. Each group was given a printed version of the hyperbolic paraboloid surface, and then they worked through the questions on the activity together.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/print-hyperbolic-paraboloid.jpg" /><media:content medium="image" url="/print-hyperbolic-paraboloid.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Continuous Fractional Derivative of Quadratic Function</title><link href="/continuous_quadratic_print" rel="alternate" type="text/html" title="Continuous Fractional Derivative of Quadratic Function" /><published>2019-08-05T00:00:00-04:00</published><updated>2019-08-05T00:00:00-04:00</updated><id>/continuous_quadratic_print</id><content type="html" xml:base="/continuous_quadratic_print"><![CDATA[<h2 id="description">Description:</h2>
 <p>This is a three dimensional graph of \(x^2\), with one axis representing the Riemann-Liouville fractional derivative order ranging from 0 to 2. The \(x\)-axis ranges from 1 to 7. The zeroth order derivative, given by \(x^2\), the first derivative, given by \(2x\), and the second derivative, given by \(2\) are highlighted with a ridge. The Riemann-Liouville fractional derivative is continuous with the respect to the order of the derivative, so the transition between the zeroth, first, and second derivative to the fractional derivatives in between results in a smooth graph.</p>
 
 <h2 id="design-process">Design process:</h2>
@@ -151,7 +329,21 @@
   <li>Continous fractional derivative of the exponential function: <a href="assets/3d-models/continuous_quadratic/Graph_Quadratic.stl">Graph_Quadratic.stl</a></li>
   <li>Stand: <a href="assets/3d-models/continuous_quadratic/Graph_Quadratic_Stand.stl">Graph_Quadratic_Stand.stl</a></li>
   <li>Mathematica Notebook: <a href="assets/3d-models/continuous_quadratic/Graph_Quadratic.nb">Graph_Quadratic.nb</a></li>
-</ul>]]></content><author><name>Kevin Ahrendt</name></author><category term="3d-printing" /><category term="3d printing" /><category term="mathematics" /><summary type="html"><![CDATA[Description: This is a three dimensional graph of \(x^2\), with one axis representing the Riemann-Liouville fractional derivative order ranging from 0 to 2. The \(x\)-axis ranges from 1 to 7. The zeroth order derivative, given by \(x^2\), the first derivative, given by \(2x\), and the second derivative, given by \(2\) are highlighted with a ridge. The Riemann-Liouville fractional derivative is continuous with the respect to the order of the derivative, so the transition between the zeroth, first, and second derivative to the fractional derivatives in between results in a smooth graph.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/print-continuous-quadratic.jpg" /><media:content medium="image" url="/print-continuous-quadratic.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Towers of Hanoi</title><link href="/towers_of_hanoi_print" rel="alternate" type="text/html" title="Towers of Hanoi" /><published>2019-08-03T00:00:00-04:00</published><updated>2019-08-03T00:00:00-04:00</updated><id>/towers_of_hanoi_print</id><content type="html" xml:base="/towers_of_hanoi_print"><![CDATA[<h2 id="description">Description:</h2>
+</ul>]]></content><author><name>Kevin Ahrendt</name></author><category term="3d-printing" /><category term="3d printing" /><category term="mathematics" /><summary type="html"><![CDATA[Description: This is a three dimensional graph of \(x^2\), with one axis representing the Riemann-Liouville fractional derivative order ranging from 0 to 2. The \(x\)-axis ranges from 1 to 7. The zeroth order derivative, given by \(x^2\), the first derivative, given by \(2x\), and the second derivative, given by \(2\) are highlighted with a ridge. The Riemann-Liouville fractional derivative is continuous with the respect to the order of the derivative, so the transition between the zeroth, first, and second derivative to the fractional derivatives in between results in a smooth graph.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/print-continuous-quadratic.jpg" /><media:content medium="image" url="/print-continuous-quadratic.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Discrete Fractional Difference of Quadratic Function</title><link href="/discrete_quadratic_print" rel="alternate" type="text/html" title="Discrete Fractional Difference of Quadratic Function" /><published>2019-08-05T00:00:00-04:00</published><updated>2019-08-05T00:00:00-04:00</updated><id>/discrete_quadratic_print</id><content type="html" xml:base="/discrete_quadratic_print"><![CDATA[<h2 id="description">Description:</h2>
+<p>This is a three dimensional graph of the discrete function \((x+1)(x)\) defined on the natural numbers. This is an analogue to the quadratic function in the nabla discrete calculus; in particular, this function is known as the rising function. One axis represents the continuous order of the Riemann-Liouville fractional difference ranging from 0 to 2. The \(x\)-axis ranges in discrete steps from 1 to 7. The zeroth order difference, given by \((x+1)(x)\), the first difference, given by \(2x+1\), and the second difference, given by \(2\) are highlighted with a ridge. The Riemann-Liouville fractional difference is continuous with the respect to the order of the difference, so the transition between the zeroth, first, and second difference to the fractional differences in between results in a smooth graph in each discrete x-value.</p>
+
+<h2 id="design-process">Design process:</h2>
+<p>I used Mathematica to generate the graph using the included Mathematica code. Then I used Slic3r to scale the Mathematica output to be \(80\times80\times80\) \(\text{mm}^3\) (as well as let it correct some errors in the stl file). Finally, I used Fusion 360 to design the stand.</p>
+
+<h2 id="post-print-finishing">Post-print finishing:</h2>
+<p>If desired, use a few drops of super glue to attach the surface to the stand.</p>
+
+<h2 id="files">Files</h2>
+<ul>
+  <li>Continous fractional derivative of the exponential function: <a href="assets/3d-models/discrete_quadratic/Graph_Discrete_Quadratic.stl">Graph_Discrete_Quadratic.stl</a></li>
+  <li>Stand: <a href="assets/3d-models/discrete_quadratic/Graph_Discrete_Quadratic_Stand.stl">Graph_Discrete_Quadratic_Stand.stl</a></li>
+  <li>Mathematica Notebook: <a href="assets/3d-models/discrete_quadratic/Graph_Discrete_Quadratic.nb">Graph_Discrete_Quadratic.nb</a></li>
+</ul>]]></content><author><name>Kevin Ahrendt</name></author><category term="3d-printing" /><category term="3d printing" /><category term="mathematics" /><summary type="html"><![CDATA[Description: This is a three dimensional graph of the discrete function \((x+1)(x)\) defined on the natural numbers. This is an analogue to the quadratic function in the nabla discrete calculus; in particular, this function is known as the rising function. One axis represents the continuous order of the Riemann-Liouville fractional difference ranging from 0 to 2. The \(x\)-axis ranges in discrete steps from 1 to 7. The zeroth order difference, given by \((x+1)(x)\), the first difference, given by \(2x+1\), and the second difference, given by \(2\) are highlighted with a ridge. The Riemann-Liouville fractional difference is continuous with the respect to the order of the difference, so the transition between the zeroth, first, and second difference to the fractional differences in between results in a smooth graph in each discrete x-value.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/print-discrete-quadratic.jpg" /><media:content medium="image" url="/print-discrete-quadratic.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Towers of Hanoi</title><link href="/towers_of_hanoi_print" rel="alternate" type="text/html" title="Towers of Hanoi" /><published>2019-08-03T00:00:00-04:00</published><updated>2019-08-03T00:00:00-04:00</updated><id>/towers_of_hanoi_print</id><content type="html" xml:base="/towers_of_hanoi_print"><![CDATA[<h2 id="description">Description:</h2>
 <p>This model represents A simple Towers of Hanoi example with four rings. <a href="https://en.wikipedia.org/wiki/Tower_of_Hanoi">Wikipedia</a> has a lot of great information on the problem.</p>
 
 <p>This is a great example of difference equations/recursion equations in the real world! The recursion relation is given by

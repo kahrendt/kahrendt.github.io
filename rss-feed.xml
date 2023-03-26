@@ -7,6 +7,20 @@
 		<atom:link href="/rss-feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Quantifying New Exhaust Fan Performance with Data from ESPHome</title>
+				
+					<dc:creator>Kevin Ahrendt</dc:creator>
+				
+				
+					<description>&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+</description>
+				
+				<pubDate>Sun, 26 Mar 2023 00:00:00 -0400</pubDate>
+				<link>/quantifying-new-exhaust-fan</link>
+				<guid isPermaLink="true">/quantifying-new-exhaust-fan</guid>
+			</item>
+		
+			<item>
 				<title>Standard Deviation Filter for ESPHome</title>
 				
 					<dc:creator>Kevin Ahrendt</dc:creator>

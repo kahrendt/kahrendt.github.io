@@ -123,6 +123,15 @@ th, td {
   text-align: left;
 }
 
+/**
+ * Image captions
+ * (https://stackoverflow.com/questions/19331362/using-an-image-caption-in-markdown-jekyll)
+ */
+img + em {
+  display: block;
+  text-align: center;
+}
+
 code,
 pre {
   font-family: "Source Code Pro", monospace;
@@ -143,10 +152,10 @@ pre {
   font-size: 0.8rem;
   line-height: 1.4;
   white-space: pre;
-  white-space: pre-wrap;
   word-break: break-all;
   word-wrap: break-word;
   background-color: #f5f5f5;
+  overflow-x: auto;
 }
 
 pre code {
@@ -366,7 +375,7 @@ pre code {
   background-position: right;
   background-repeat: no-repeat;
   background-size: contain;
-  background-size: 200px auto;
+  background-size: 200px 200px;
   position: relative;
 }
 
@@ -436,14 +445,14 @@ pre code {
 }
 
 .page-content {
-  max-width: 600px;
+  max-width: 1100px;
   display: block;
   margin: 10px auto 10px;
   padding: 0px 10px 10px;
 }
 
 .post-content {
-  width: 600px;
+  width: 1100px;
   display: block;
   margin: 10px auto 10px;
 }
