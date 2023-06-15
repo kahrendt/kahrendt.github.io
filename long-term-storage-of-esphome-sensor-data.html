@@ -1,0 +1,229 @@
+<!doctype html>
+<html>
+  <head>
+  <title>
+    
+      Long-Term Data Storage of ESPHome Sensor Data | Kevin Ahrendt
+    
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/syntax.css">
+  <!-- Use Atom -->
+  <link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Kevin Ahrendt" />
+  <!-- RSS-v2.0
+  <link href="/rss-feed.xml" type="application/rss+xml" rel="alternate" title="Kevin Ahrendt | A personal website for 3D printing, mathematics, data science, and home automation."/>
+  //-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Source+Code+Pro">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+  <!-- Google Analytics -->
+  <!-- <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+ -->
+  <!-- Use Jekyll SEO plugin -->
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Long-Term Data Storage of ESPHome Sensor Data | Kevin Ahrendt</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Long-Term Data Storage of ESPHome Sensor Data" />
+<meta name="author" content="Kevin Ahrendt" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Introduction" />
+<meta property="og:description" content="Introduction" />
+<meta property="og:site_name" content="Kevin Ahrendt" />
+<meta property="og:image" content="/chart-bell-curve.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-06-15T00:00:00-04:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="/chart-bell-curve.png" />
+<meta property="twitter:title" content="Long-Term Data Storage of ESPHome Sensor Data" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kevin Ahrendt"},"dateModified":"2023-06-15T00:00:00-04:00","datePublished":"2023-06-15T00:00:00-04:00","description":"Introduction","headline":"Long-Term Data Storage of ESPHome Sensor Data","image":"/chart-bell-curve.png","mainEntityOfPage":{"@type":"WebPage","@id":"/long-term-storage-of-esphome-sensor-data"},"url":"/long-term-storage-of-esphome-sensor-data"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+  <body>
+    <div class="container">
+      <header class="site-header">
+  <h3 class="site-title">
+    <a href="/">Kevin Ahrendt</a>
+  </h3>
+  <nav class="menu-list">
+    
+      <a href="/3d-printing" class="menu-link">3D Printing</a>
+    
+      <a href="/programming" class="menu-link">Programming</a>
+    
+      <a href="/smart-home" class="menu-link">Smart Home Data</a>
+    
+      <a href="/academics" class="menu-link">Academics</a>
+    
+      <a href="/about-me" class="menu-link">About Me</a>
+    
+      <a href="/contact" class="menu-link">Contact</a>
+    
+    
+  </nav>
+  <div class="dropdown">
+    <button class="dropbtn"><i class="fa fa-bars" aria-hidden="true"></i></button>
+    <div class="dropdown-content">
+      
+        <a href="/3d-printing" class="menu-link">3D Printing</a>
+      
+        <a href="/programming" class="menu-link">Programming</a>
+      
+        <a href="/smart-home" class="menu-link">Smart Home Data</a>
+      
+        <a href="/academics" class="menu-link">Academics</a>
+      
+        <a href="/about-me" class="menu-link">About Me</a>
+      
+        <a href="/contact" class="menu-link">Contact</a>
+      
+      
+    </div>
+  </div>
+</header>
+
+      <div class="content-wrapper">
+        <div class="post-content">
+  <h1>
+    Long-Term Data Storage of ESPHome Sensor Data
+  </h1>
+  
+    <span class="post-date">
+  Written on
+  
+  June
+  15th,
+  2023
+  by
+  
+    Kevin Ahrendt
+  
+</span>
+
+  
+  
+    <div class="featured-image">
+      <img src="/assets/img/chart-bell-curve.png">
+    </div>
+  
+  <article>
+    <h2 id="introduction">Introduction</h2>
+
+<p>I currently have 26 devices running ESPHome that collect data from our home. The various devices include environmental sensors like air pressure, temperature, humidity, and levels for CO2, VOC levels, and particulate matter. Other devices collect power/energy usage using smart plugs or a whole house power monitoring device (<a href="https://www.emporiaenergy.com/how-the-vue-energy-monitor-works">Emporia Vue 2</a> with <a href="https://github.com/emporia-vue-local/esphome">custom component</a>). Altogether, these devices generate a significant amount of raw data. That data is partially filtered and sent to my Home Assistant server. Home Assistant then stores the filtered data for about ten days. After that time, Home Assistant only keeps aggregates like the mean, minimum, and maximum for <a href="https://data.home-assistant.io/docs/statistics/">1-hour intervals</a>. I plan to collect all this measurement data in a separate database for permanent storage. I will retain raw data for one month and permanently retain all data aggregated over one-minute intervals.</p>
+
+<h2 id="possible-approaches">Possible Approaches</h2>
+
+<p>There are several established ways to accomplish this goal.</p>
+<ol>
+  <li>Run <a href="https://www.influxdata.com/">InfluxDB</a> (or <a href="https://victoriametrics.com/">VictoriaMetrics</a>) and use Home Assistant’s <a href="https://www.home-assistant.io/integrations/influxdb/">component</a> to use it for long-term storage. There are many tutorials available for this setup, for example <a href="https://dev.to/admantium/home-assistant-collecting-sensor-data-with-influxdb-3mfl">here</a> or <a href="https://thesmarthomejourney.com/2021/05/02/grafana-influxdb-home-assistant/">here</a>.
+    <ul>
+      <li>Advantages:
+        <ul>
+          <li>Relatively easy to setup and use
+            <ul>
+              <li>InfluxDB can automatically downsample the data after a set time.</li>
+              <li>Widespread community use, so many resources available for help</li>
+            </ul>
+          </li>
+          <li>Disadvantages:
+            <ul>
+              <li>Requires Home Assistant to be running (generally not a problem, as restarts are rarely needed)</li>
+              <li>Requires all data to be passed through Home Assistant, so for more complete data, all sensors should have a short update interval. I generally do not need my Home Assistant instance to have such small update intervals for automations, so unnecessary data is being sent only to be passed on to InfluxDB.
+                <ul>
+                  <li>Even with a short update window, the sent data could easily miss a maximum value if measured between updates.</li>
+                </ul>
+              </li>
+              <li>Not all data sources (not necessarily smart-home data) can easily be integrated into Home Assistant to be passed onto long-term storage.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Use a data scraping program like <a href="https://www.influxdata.com/time-series-platform/telegraf/">Telegraf</a> to collect data directly from the device and send it to a database.
+    <ul>
+      <li>Advantages:
+        <ul>
+          <li>Removes Home Assistant from the long-term data collection process.</li>
+          <li>Telegraf can aggregate incoming data and provide typical summary statistics like minimum, maximum, and mean.</li>
+          <li>Disadvantages:
+            <ul>
+              <li>Data is collected at a set interval (the default is five seconds). Any summary statistics are limited to one reading every five seconds, so it could easily miss a maximum value if measured between updates.</li>
+              <li>Collecting data directly from ESPHome is challenging. There are several options.
+                <ul>
+                  <li>Use the <a href="https://esphome.io/components/prometheus.html">Prometheus</a> ESPHome component to allow Telegraf to scrape sensor measurements
+                    <ul>
+                      <li>Requires using the Arduino core instead of the (generally) better-performing ESP-IDF framework</li>
+                      <li>Adds significant overhead on the ESP device</li>
+                    </ul>
+                  </li>
+                  <li>Setup an MQTT server like <a href="https://mosquitto.org/">Mosquitto</a> and configure ESPHome to send data to it using the <a href="https://esphome.io/components/mqtt.html">MQTT component</a>
+                    <ul>
+                      <li>Increases complexity.</li>
+                      <li>Cannot specify which sensors use the native Home Assistant API and which use MQTT.</li>
+                      <li>Overhead on the ESP device is minimal.</li>
+                    </ul>
+                  </li>
+                  <li>Use the <a href="https://esphome.io/components/http_request.html">HTTP Request Component</a> to send data directly to the database.
+                    <ul>
+                      <li>Tedious configuration for a large number of sensors</li>
+                      <li>Adds significant overhead on the ESP device</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="current-plan">Current Plan</h2>
+
+<p>I will use a variation of the second option and overcome the listed disadvantages with some custom code. The long-term data will be stored using a VictoriaMetrics cluster[https://docs.victoriametrics.com/Cluster-VictoriaMetrics.html]. The VictoriaMetrics cluster will have two separate storage instances running; one for high-frequency data retained for one month, and the other will store aggregated data at a lower frequency for permanent retention. Data will be collected using Telegraf’s <a href="https://www.influxdata.com/integration/mqtt-telegraf-consumer/">MQTT consumer plugin</a> from a Mosquitto MQTT Broker. The ESPHome devices will aggregate and send data over MQTT for long-term storage.</p>
+
+<p>![[Data Retention Flow Chart.png]]
+We can break this down into three steps:
+1) Configure VictoriaMetrics and Telegraf for data collection and storage.
+2) Modify ESPHome’s MQTT code to restrict which sensors send measurements via API or MQTT
+	- Sensors with a long update interval are exposed to only Home Assistant.
+	- Sensor measurement aggregates are sent only via MQTT.
+1) Develop a statistic component for ESPHome that aggregates the data over a sliding window quickly and efficiently.
+	- ESPHome has <a href="https://esphome.io/components/sensor/index.html#sensor-filters">sensor filters</a> built-in for the minimum, maximum, and mean (among other statistics) over a sliding window. These work well for one or two sensors, but if we want aggregated data for many sensors, this quickly has issues.
+		- Each aggregate requires a <a href="https://esphome.io/components/copy.html">Copy component</a> with the appropriate filter applied. It is tedious to configure several different aggregates for many different source sensors.
+		- The algorithms for finding the aggregates are inefficient in memory and computational time. Using the built-in filters to compute statistics like minimum, maximum, and mean for several sensors over large sliding windows can crash the device.</p>
+
+<h2 id="future">Future</h2>
+
+<p>I will write future posts describing my implementation of each of these steps. I will heavily focus on describing the custom statistics component I have developed that is computational and memory efficient.</p>
+
+  </article>
+  
+  
+  
+</div>
+
+      </div>
+      <footer class="footer">
+  
+  <div class="footer-description"><a href="/">Kevin Ahrendt | A personal website for 3D printing, mathematics, data science, and home automation.</a></div>
+</footer>
+
+    </div>
+  </body>
+</html>

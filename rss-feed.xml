@@ -7,6 +7,20 @@
 		<atom:link href="/rss-feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Long-Term Data Storage of ESPHome Sensor Data</title>
+				
+					<dc:creator>Kevin Ahrendt</dc:creator>
+				
+				
+					<description>&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+</description>
+				
+				<pubDate>Thu, 15 Jun 2023 00:00:00 -0400</pubDate>
+				<link>/long-term-storage-of-esphome-sensor-data</link>
+				<guid isPermaLink="true">/long-term-storage-of-esphome-sensor-data</guid>
+			</item>
+		
+			<item>
 				<title>Quantifying New Exhaust Fan Performance with Data from ESPHome</title>
 				
 					<dc:creator>Kevin Ahrendt</dc:creator>
