@@ -197,16 +197,31 @@
 
 <p>I will use a variation of the second option and overcome the listed disadvantages with some custom code. The long-term data will be stored using a VictoriaMetrics cluster[https://docs.victoriametrics.com/Cluster-VictoriaMetrics.html]. The VictoriaMetrics cluster will have two separate storage instances running; one for high-frequency data retained for one month, and the other will store aggregated data at a lower frequency for permanent retention. Data will be collected using Telegraf’s <a href="https://www.influxdata.com/integration/mqtt-telegraf-consumer/">MQTT consumer plugin</a> from a Mosquitto MQTT Broker. The ESPHome devices will aggregate and send data over MQTT for long-term storage.</p>
 
-<p>![[Data Retention Flow Chart.png]]
-We can break this down into three steps:
-1) Configure VictoriaMetrics and Telegraf for data collection and storage.
-2) Modify ESPHome’s MQTT code to restrict which sensors send measurements via API or MQTT
-	- Sensors with a long update interval are exposed to only Home Assistant.
-	- Sensor measurement aggregates are sent only via MQTT.
-1) Develop a statistic component for ESPHome that aggregates the data over a sliding window quickly and efficiently.
-	- ESPHome has <a href="https://esphome.io/components/sensor/index.html#sensor-filters">sensor filters</a> built-in for the minimum, maximum, and mean (among other statistics) over a sliding window. These work well for one or two sensors, but if we want aggregated data for many sensors, this quickly has issues.
-		- Each aggregate requires a <a href="https://esphome.io/components/copy.html">Copy component</a> with the appropriate filter applied. It is tedious to configure several different aggregates for many different source sensors.
-		- The algorithms for finding the aggregates are inefficient in memory and computational time. Using the built-in filters to compute statistics like minimum, maximum, and mean for several sensors over large sliding windows can crash the device.</p>
+<p>![[Data Retention Flow Chart.png]]</p>
+
+<p><img src="assets/img/data-retention-flow-chart.png" alt="Data Retention Flow Chart" />
+<em>Flow chart showing where data is sent from an ESPHome Device</em></p>
+
+<p>We can break this down into three steps:</p>
+<ol>
+  <li>Configure VictoriaMetrics and Telegraf for data collection and storage.</li>
+  <li>Modify ESPHome’s MQTT code to restrict which sensors send measurements via API or MQTT
+    <ul>
+      <li>Sensors with a long update interval are exposed to only Home Assistant.</li>
+      <li>Sensor measurement aggregates are sent only via MQTT.</li>
+    </ul>
+  </li>
+  <li>Develop a statistic component for ESPHome that aggregates the data over a sliding window quickly and efficiently.
+    <ul>
+      <li>ESPHome has <a href="https://esphome.io/components/sensor/index.html#sensor-filters">sensor filters</a> built-in for the minimum, maximum, and mean (among other statistics) over a sliding window. These work well for one or two sensors, but if we want aggregated data for many sensors, this quickly has issues.
+        <ul>
+          <li>Each aggregate requires a <a href="https://esphome.io/components/copy.html">Copy component</a> with the appropriate filter applied. It is tedious to configure several different aggregates for many different source sensors.</li>
+          <li>The algorithms for finding the aggregates are inefficient in memory and computational time. Using the built-in filters to compute statistics like minimum, maximum, and mean for several sensors over large sliding windows can crash the device.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
 
 <h2 id="future">Future</h2>
 

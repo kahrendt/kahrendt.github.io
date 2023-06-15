@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2023-06-15T10:06:18-04:00</updated><id>/feed.xml</id><title type="html">Kevin Ahrendt</title><subtitle>A personal website for 3D printing, mathematics, data science, and home automation.</subtitle><author><name>Kevin Ahrendt</name></author><entry><title type="html">Long-Term Data Storage of ESPHome Sensor Data</title><link href="/long-term-storage-of-esphome-sensor-data" rel="alternate" type="text/html" title="Long-Term Data Storage of ESPHome Sensor Data" /><published>2023-06-15T00:00:00-04:00</published><updated>2023-06-15T00:00:00-04:00</updated><id>/long-term-storage-of-esphome-sensor-data</id><content type="html" xml:base="/long-term-storage-of-esphome-sensor-data"><![CDATA[<h2 id="introduction">Introduction</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2023-06-15T10:11:34-04:00</updated><id>/feed.xml</id><title type="html">Kevin Ahrendt</title><subtitle>A personal website for 3D printing, mathematics, data science, and home automation.</subtitle><author><name>Kevin Ahrendt</name></author><entry><title type="html">Long-Term Data Storage of ESPHome Sensor Data</title><link href="/long-term-storage-of-esphome-sensor-data" rel="alternate" type="text/html" title="Long-Term Data Storage of ESPHome Sensor Data" /><published>2023-06-15T00:00:00-04:00</published><updated>2023-06-15T00:00:00-04:00</updated><id>/long-term-storage-of-esphome-sensor-data</id><content type="html" xml:base="/long-term-storage-of-esphome-sensor-data"><![CDATA[<h2 id="introduction">Introduction</h2>
 
 <p>I currently have 26 devices running ESPHome that collect data from our home. The various devices include environmental sensors like air pressure, temperature, humidity, and levels for CO2, VOC levels, and particulate matter. Other devices collect power/energy usage using smart plugs or a whole house power monitoring device (<a href="https://www.emporiaenergy.com/how-the-vue-energy-monitor-works">Emporia Vue 2</a> with <a href="https://github.com/emporia-vue-local/esphome">custom component</a>). Altogether, these devices generate a significant amount of raw data. That data is partially filtered and sent to my Home Assistant server. Home Assistant then stores the filtered data for about ten days. After that time, Home Assistant only keeps aggregates like the mean, minimum, and maximum for <a href="https://data.home-assistant.io/docs/statistics/">1-hour intervals</a>. I plan to collect all this measurement data in a separate database for permanent storage. I will retain raw data for one month and permanently retain all data aggregated over one-minute intervals.</p>
 
@@ -75,16 +75,31 @@
 
 <p>I will use a variation of the second option and overcome the listed disadvantages with some custom code. The long-term data will be stored using a VictoriaMetrics cluster[https://docs.victoriametrics.com/Cluster-VictoriaMetrics.html]. The VictoriaMetrics cluster will have two separate storage instances running; one for high-frequency data retained for one month, and the other will store aggregated data at a lower frequency for permanent retention. Data will be collected using Telegraf’s <a href="https://www.influxdata.com/integration/mqtt-telegraf-consumer/">MQTT consumer plugin</a> from a Mosquitto MQTT Broker. The ESPHome devices will aggregate and send data over MQTT for long-term storage.</p>
 
-<p>![[Data Retention Flow Chart.png]]
-We can break this down into three steps:
-1) Configure VictoriaMetrics and Telegraf for data collection and storage.
-2) Modify ESPHome’s MQTT code to restrict which sensors send measurements via API or MQTT
-	- Sensors with a long update interval are exposed to only Home Assistant.
-	- Sensor measurement aggregates are sent only via MQTT.
-1) Develop a statistic component for ESPHome that aggregates the data over a sliding window quickly and efficiently.
-	- ESPHome has <a href="https://esphome.io/components/sensor/index.html#sensor-filters">sensor filters</a> built-in for the minimum, maximum, and mean (among other statistics) over a sliding window. These work well for one or two sensors, but if we want aggregated data for many sensors, this quickly has issues.
-		- Each aggregate requires a <a href="https://esphome.io/components/copy.html">Copy component</a> with the appropriate filter applied. It is tedious to configure several different aggregates for many different source sensors.
-		- The algorithms for finding the aggregates are inefficient in memory and computational time. Using the built-in filters to compute statistics like minimum, maximum, and mean for several sensors over large sliding windows can crash the device.</p>
+<p>![[Data Retention Flow Chart.png]]</p>
+
+<p><img src="assets/img/data-retention-flow-chart.png" alt="Data Retention Flow Chart" />
+<em>Flow chart showing where data is sent from an ESPHome Device</em></p>
+
+<p>We can break this down into three steps:</p>
+<ol>
+  <li>Configure VictoriaMetrics and Telegraf for data collection and storage.</li>
+  <li>Modify ESPHome’s MQTT code to restrict which sensors send measurements via API or MQTT
+    <ul>
+      <li>Sensors with a long update interval are exposed to only Home Assistant.</li>
+      <li>Sensor measurement aggregates are sent only via MQTT.</li>
+    </ul>
+  </li>
+  <li>Develop a statistic component for ESPHome that aggregates the data over a sliding window quickly and efficiently.
+    <ul>
+      <li>ESPHome has <a href="https://esphome.io/components/sensor/index.html#sensor-filters">sensor filters</a> built-in for the minimum, maximum, and mean (among other statistics) over a sliding window. These work well for one or two sensors, but if we want aggregated data for many sensors, this quickly has issues.
+        <ul>
+          <li>Each aggregate requires a <a href="https://esphome.io/components/copy.html">Copy component</a> with the appropriate filter applied. It is tedious to configure several different aggregates for many different source sensors.</li>
+          <li>The algorithms for finding the aggregates are inefficient in memory and computational time. Using the built-in filters to compute statistics like minimum, maximum, and mean for several sensors over large sliding windows can crash the device.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
 
 <h2 id="future">Future</h2>
 
