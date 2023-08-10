@@ -7,6 +7,20 @@
 		<atom:link href="/rss-feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Smart Garage Door Opener with Environmental Sensors</title>
+				
+					<dc:creator>Kevin Ahrendt</dc:creator>
+				
+				
+					<description>&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+</description>
+				
+				<pubDate>Thu, 10 Aug 2023 00:00:00 -0400</pubDate>
+				<link>/garage-sensors</link>
+				<guid isPermaLink="true">/garage-sensors</guid>
+			</item>
+		
+			<item>
 				<title>Long-Term Data Storage of ESPHome Sensor Data</title>
 				
 					<dc:creator>Kevin Ahrendt</dc:creator>
@@ -135,20 +149,6 @@
 				<pubDate>Fri, 08 Dec 2017 00:00:00 -0500</pubDate>
 				<link>/continuous_exponential_print</link>
 				<guid isPermaLink="true">/continuous_exponential_print</guid>
-			</item>
-		
-			<item>
-				<title>3D Printing Setup</title>
-				
-					<dc:creator>Kevin Ahrendt</dc:creator>
-				
-				
-					<description>&lt;p&gt;I am fascinated with 3D printing and am interested in making mathematical puzzles using that process, along with models that illustrate my research interests. I primarily use Autodesk Fusion 360 to design functional models and use Mathematica to generate mathematical models. I have also have experience with OpenSCAD for model design. My current printer is a &lt;a href=&quot;https://vorondesign.com/&quot;&gt;Voron CoreXY V2.1&lt;/a&gt;.​&lt;/p&gt;
-</description>
-				
-				<pubDate>Thu, 01 Jun 2017 00:00:00 -0400</pubDate>
-				<link>/3d-printing-setup</link>
-				<guid isPermaLink="true">/3d-printing-setup</guid>
 			</item>
 		
 	</channel>

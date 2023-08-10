@@ -1,4 +1,307 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2023-06-15T10:11:34-04:00</updated><id>/feed.xml</id><title type="html">Kevin Ahrendt</title><subtitle>A personal website for 3D printing, mathematics, data science, and home automation.</subtitle><author><name>Kevin Ahrendt</name></author><entry><title type="html">Long-Term Data Storage of ESPHome Sensor Data</title><link href="/long-term-storage-of-esphome-sensor-data" rel="alternate" type="text/html" title="Long-Term Data Storage of ESPHome Sensor Data" /><published>2023-06-15T00:00:00-04:00</published><updated>2023-06-15T00:00:00-04:00</updated><id>/long-term-storage-of-esphome-sensor-data</id><content type="html" xml:base="/long-term-storage-of-esphome-sensor-data"><![CDATA[<h2 id="introduction">Introduction</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2023-08-10T18:29:10-04:00</updated><id>/feed.xml</id><title type="html">Kevin Ahrendt</title><subtitle>A personal website for 3D printing, mathematics, data science, and home automation.</subtitle><author><name>Kevin Ahrendt</name></author><entry><title type="html">Smart Garage Door Opener with Environmental Sensors</title><link href="/garage-sensors" rel="alternate" type="text/html" title="Smart Garage Door Opener with Environmental Sensors" /><published>2023-08-10T00:00:00-04:00</published><updated>2023-08-10T00:00:00-04:00</updated><id>/garage-sensors</id><content type="html" xml:base="/garage-sensors"><![CDATA[<h2 id="introduction">Introduction</h2>
+
+<p>This project’s goal is to connect my garage door opener to Home Assistant while also collecting environmental data. My garage door opener uses the Chamberlain Security+ 2.0 protocol, so, unfortunately, a simple relay for the door button wires does not work. Fortunately, Paul Wieland has developed and sells  <a href="https://paulwieland.github.io/ratgdo/">ratgdo</a> shields that allow you to use an ESP8266 or ESP32 to control the garage door opener. Finally, I use the  <a href="https://github.com/ESPHome-RATGDO/esphome-ratgdo">esphome-ratgdo custom component</a> to use <a href="https://esphome.io/">ESPHome</a> to control the Garage Door Opener functions while also collecting data from various sensors.</p>
+
+<p>The main focus of this post is to show how I used off-the-shelf components to collect environmental data in my garage rather than the ratgdo project, though I highly recommend the ratgdo shields! The air temperature, humidity, and pressure are all measured. The distance from the ceiling to below is collected. This distance determines whether or not the car is in the garage. The motion sensor automatically turns on the door opener lights when someone enters the garage. All the sensor modules use I2C communication and have Adafruit’s Stemma/SparkFun’s Qwiic connectors for easy development. To use only I2C sensors, I contributed implementations to the ESPHome project for the BMP581, Qwiic PIR (not accepted into the project yet), and Zio Ultrasonic sensors. Instead, I could have used the existing components for the <a href="https://esphome.io/components/binary_sensor/gpio">PIR sensor</a> and the <a href="https://esphome.io/components/sensor/ultrasonic">ultrasonic distance sensor</a>. However, this would require two more GPIOs on the ESP32. Using I2C sensors allow me to keep my wiring minimal, especially since the ESP32 and ratgdo shield are next to the garage door opener, and I wanted to mount the sensors in a more optimal position.</p>
+
+<script src="/assets/js/jquery-1.10.2.min.js"></script>
+
+<script src="/assets/js/lightbox-2.6.min.js"></script>
+
+<link href="/assets/css/lightbox.css" rel="stylesheet" />
+
+<ol>
+
+<a href="/assets/img/garage-opener-sensors/garage-ceiling.jpg" data-lightbox="garage-ceiling" title="Sensors mounted on garage ceiling with an RJ11 cable leading to the garage door opener and the ESP32 on a ratgdo shield.">
+<img src="/assets/img/garage-opener-sensors/garage-ceiling.jpg" width="250" />
+</a>
+<p style="text-align: center;">Sensors mounted on garage ceiling with an RJ11 cable leading to the garage door opener and the ESP32 on a ratgdo shield.</p>
+
+</ol>
+
+<h2 id="components">Components</h2>
+
+<ul>
+  <li>Controller
+    <ul>
+      <li><a href="https://www.amazon.com/gp/product/B08L5XFWN6">D1 ESP32 Mini</a></li>
+      <li><a href="https://paulwieland.github.io/ratgdo/">ratgdo shield</a></li>
+    </ul>
+  </li>
+  <li>I2C Components/Sensors
+    <ul>
+      <li><a href="https://www.adafruit.com/product/4756">Adafruit LTC4311 I2C Extender</a> - Allows for a long I2C cable so that sensors in a more suitable location.</li>
+      <li><a href="https://www.adafruit.com/product/5665">Adafruit SHT45 Precision Temperature and Humidity Sensor</a> - Typically measures temperature with ±0.1°C accuracy and humidity with ±1.0% accuracy.</li>
+      <li><a href="https://www.sparkfun.com/products/20170">SparkFun BMP581 Pressure Sensor</a> - A pressure sensor with high accuracy, ± 0.5hPa max.</li>
+      <li><a href="https://www.sparkfun.com/products/17777">SparkFun Qwiic Ultrasonic Distance Sensor</a> - Used to determine whether the car is parked in the garage. This sensor uses I2C communications for simplified wiring.</li>
+      <li><a href="https://www.sparkfun.com/products/17374">SparkFun Qwiic PIR Motion Sensor</a> - A motion sensor that communicates over I2C for simplified wiring.</li>
+    </ul>
+  </li>
+  <li>Wiring
+    <ul>
+      <li><a href="https://www.amazon.com/dp/B0B9BHX7T3">Right Angle RJ11 Breakout</a> - Used on the sensor end of the phone cord connecting the sensors to the ESP32 board.</li>
+      <li><a href="https://www.amazon.com/gp/product/B09HTRKRSH">RJ11 Breakout</a> - Used on the ESP32 end of the cord.</li>
+      <li><a href="https://www.amazon.com/gp/product/B00028EXEE">RJ 11 Cord</a></li>
+      <li><a href="https://www.sparkfun.com/products/15081">SparkFun Qwiic Cable Kit</a> - Used to connect sensors to one another.</li>
+    </ul>
+  </li>
+  <li>Hardware
+    <ul>
+      <li><a href="https://www.adafruit.com/product/5780">Adafruit Swirly Aluminum Mounting Grid</a> - Easy way to mount components with varying dimensions.</li>
+      <li><a href="https://www.amazon.com/dp/B09F9GMP4W">Nylon Standoff Screw Set</a> - Used to mount the components while not being electrically conductive.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="sensors">Sensors</h2>
+
+<p>The sensors are attached to the Swirly Mounting Grid using hex standoffs. The right-angle RJ11 breakout is similarly attached, with right-angle pins soldered into place. I used a female jump to Qwiic cable to connect to the first sensor. I then used regular Qwiic cables to connect each sensor to the next in a daisy chain. The cables pass through the mounting grid holes with care.</p>
+
+<p>I used a heavy-duty wire cutter to cut off the excess mounting grid. I then placed the cut-off portion on the bottom of the other grid and used M3 screws to connect the two. This extension allowed me to use a 3M Medium Command Strip to attach the sensors to the garage ceiling. Without the extension, the screws from the standoffs extended too far for the Command strip to connect with the one on the ceiling.</p>
+
+<script src="/assets/js/jquery-1.10.2.min.js"></script>
+
+<script src="/assets/js/lightbox-2.6.min.js"></script>
+
+<link href="/assets/css/lightbox.css" rel="stylesheet" />
+
+<ol>
+
+<a href="/assets/img/garage-opener-sensors/sensor-side-gallery/1-swirly-above-precut.jpg" data-lightbox="sensor-side" title="Sensors mounted on Adafruit Swirly before cutting.">
+<img src="/assets/img/garage-opener-sensors/sensor-side-gallery/1-swirly-above-precut.jpg" width="250" />
+</a>
+<p style="text-align: center;">Sensors mounted on Adafruit Swirly before cutting.</p>
+
+<a href="/assets/img/garage-opener-sensors/sensor-side-gallery/2-swirly-below-precut.jpg" data-lightbox="sensor-side" title="Underneath view of sensors mounted on Adafruit Swirly before cutting.">
+<img src="/assets/img/garage-opener-sensors/sensor-side-gallery/2-swirly-below-precut.jpg" width="250" />
+</a>
+<p style="text-align: center;">Underneath view of sensors mounted on Adafruit Swirly before cutting.</p>
+
+<a href="/assets/img/garage-opener-sensors/sensor-side-gallery/3-swirly-above-postcut.jpg" data-lightbox="sensor-side" title="Sensors on Adafruit Swirly after cutting excess.">
+<img src="/assets/img/garage-opener-sensors/sensor-side-gallery/3-swirly-above-postcut.jpg" width="250" />
+</a>
+<p style="text-align: center;">Sensors on Adafruit Swirly after cutting excess.</p>
+
+<a href="/assets/img/garage-opener-sensors/sensor-side-gallery/4-swirly-cut-mounted.jpg" data-lightbox="sensor-side" title="Excess Swirly material mounted to sensor board with M3 screws.">
+<img src="/assets/img/garage-opener-sensors/sensor-side-gallery/4-swirly-cut-mounted.jpg" width="250" />
+</a>
+<p style="text-align: center;">Excess Swirly material mounted to sensor board with M3 screws.</p>
+
+<a href="/assets/img/garage-opener-sensors/sensor-side-gallery/5-command-strip.jpg" data-lightbox="sensor-side" title="Medium command strip applied to bottom of sensors mounted on Adafruit Swirly.">
+<img src="/assets/img/garage-opener-sensors/sensor-side-gallery/5-command-strip.jpg" width="250" />
+</a>
+<p style="text-align: center;">Medium command strip applied to bottom of sensors mounted on Adafruit Swirly.</p>
+
+</ol>
+
+<h2 id="esp32-on-ratgdo">ESP32 on ratgdo</h2>
+
+<p>I soldered an RJ11 breakout directly to the LTC4311 I2C extender board. I used a Qwiic Cable to male jumper adapter to connect it to the ESP32. I soldered some headers on the ESP32 specifically for the I2C connection, as the ratgdo shield seems to have additional circuitry for the broken-out pins. The ratgdo shield is attached to the Garage door opener following the original instructions.</p>
+
+<script src="/assets/js/jquery-1.10.2.min.js"></script>
+
+<script src="/assets/js/lightbox-2.6.min.js"></script>
+
+<link href="/assets/css/lightbox.css" rel="stylesheet" />
+
+<ol>
+
+<a href="/assets/img/garage-opener-sensors/opener-side-gallery/1-rj11-ltc4311.jpg" data-lightbox="opener-side" title="RJ11 breakout board soldered directly to LTC4311 module.">
+<img src="/assets/img/garage-opener-sensors/opener-side-gallery/1-rj11-ltc4311.jpg" width="250" />
+</a>
+<p style="text-align: center;">RJ11 breakout board soldered directly to LTC4311 module.</p>
+
+<a href="/assets/img/garage-opener-sensors/opener-side-gallery/2-rj11-ltc4311-alt.jpg" data-lightbox="opener-side" title="Another view of RJ11 breakout board soldered directly to LTC4311 module.">
+<img src="/assets/img/garage-opener-sensors/opener-side-gallery/2-rj11-ltc4311-alt.jpg" width="250" />
+</a>
+<p style="text-align: center;">Another view of RJ11 breakout board soldered directly to LTC4311 module.</p>
+
+<a href="/assets/img/garage-opener-sensors/opener-side-gallery/3-esp32.jpg" data-lightbox="opener-side" title="ESP32 D1 mini on ratgdo shield, with wiring for I2C sensors.">
+<img src="/assets/img/garage-opener-sensors/opener-side-gallery/3-esp32.jpg" width="250" />
+</a>
+<p style="text-align: center;">ESP32 D1 mini on ratgdo shield, with wiring for I2C sensors.</p>
+
+<a href="/assets/img/garage-opener-sensors/opener-side-gallery/4-esp32-ltc4311.jpg" data-lightbox="opener-side" title="LTC4311 I2C extender connected to ESP32 D1 mini on ratgdo shield.">
+<img src="/assets/img/garage-opener-sensors/opener-side-gallery/4-esp32-ltc4311.jpg" width="250" />
+</a>
+<p style="text-align: center;">LTC4311 I2C extender connected to ESP32 D1 mini on ratgdo shield.</p>
+
+<a href="/assets/img/garage-opener-sensors/opener-side-gallery/5-opener-connections.jpg" data-lightbox="opener-side" title="Wires on garage door opener for ratgdo control.">
+<img src="/assets/img/garage-opener-sensors/opener-side-gallery/5-opener-connections.jpg" width="250" />
+</a>
+<p style="text-align: center;">Wires on garage door opener for ratgdo control.</p>
+
+</ol>
+
+<h2 id="esphome-configuration-highlights">ESPHome Configuration Highlights</h2>
+
+<p>I used the basic configuration from the ESPHome-Ratgdo project as a basis. I do not have any reed switches connected to the ratgdo shield, so I removed them from the configuration. Here are some of the highlights of my ESPHome configuration file.</p>
+
+<h3 id="ultrasonic-sensor-to-detect-if-car-is-present">Ultrasonic Sensor to Detect If Car is Present</h3>
+
+<p>The ultrasonic sensor measures the distance from the ceiling to whatever is below it. When the car is in the garage, the distance is much less than if not. The sensor measures distance in mm, but this measurement is noisy. This noise does not affect the car presence detection, so I convert mm to m using the multiply filter and keep only one decimal of accuracy. The sensor only updates the distance to HA every minute or if the distance changes by 0.1 m using the <code class="language-plaintext highlighter-rouge">or</code>, <code class="language-plaintext highlighter-rouge">delta</code>, and <code class="language-plaintext highlighter-rouge">throttle</code> filters.</p>
+
+<p>A template binary sensor determines the car’s presence state. If the distance is more than 2m, then nothing is below the ceiling; i.e., the car is not in the garage. I use the <code class="language-plaintext highlighter-rouge">invert</code> filter to get the correct logic and the <code class="language-plaintext highlighter-rouge">delayed_on_off</code> filter to debounce any noise.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+sensor:
+  - platform: zio_ultrasonic	# included in ESPHome 2023.7
+    name: "Distance"
+	id: ultrasonic_distance
+    update_interval: 1s
+    unit_of_measurement: "m"
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.001     # convert mm to m
+      - or:
+          - delta: 0.1      # publish if distance changes more than 0.1 meters
+          - throttle: 60s	# publish every 60s
+
+binary_sensor:
+  # Car Presence from Distance Sensor
+  - platform: analog_threshold
+    name: "Car"
+    sensor_id: ultrasonic_distance
+    device_class: presence
+    icon: mdi:car
+    threshold: 2    # if the distance is more than 2m, then no car is present
+    filters:
+      - invert
+      - delayed_on_off: 5s
+
+</code></pre></div></div>
+
+<h3 id="motion-sensor-to-turn-onoff-lights">Motion Sensor to Turn On/Off Lights</h3>
+
+<p>The Qwiic PIR Motion sensor is an internal component in ESPHome. If it detects motion, it turns on the garage door opener light using the ratgdo component. A <code class="language-plaintext highlighter-rouge">copy</code> sensor turns off the light after not observing any motion for 2.5 minutes. Finally, another <code class="language-plaintext highlighter-rouge">copy</code> sensor sends the motion sensor state to Home Assistant, with the <code class="language-plaintext highlighter-rouge">delayed_on_off</code> filter debouncing the signal.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+external_components:
+  - source: github://pr#5194
+    components: [ qwiic_pir ]  
+
+binary_sensor:
+  # Qwiic PIR Motion Sensor
+  - platform: qwiic_pir
+    id: qwiic_pir_motion
+    on_press:
+      then:
+        - light.turn_on: ${id_prefix}_light  	
+
+  # Motion sensor filtered for internally turning light off
+  - platform: copy
+    source_id: qwiic_pir_motion
+    id: motion_light_off_delay_filter
+    filters:
+      - delayed_off: 2.5min
+    on_release:
+      then:
+        - light.turn_off: ratgdo_light 		
+
+  # Motion sensor filtered for HA
+  - platform: copy
+    source_id: qwiic_pir_motion
+    name: "Motion"  
+    filters:
+      - delayed_on_off:   # debounce the motion state
+          time_on: 50ms
+          time_off: 15s  
+
+</code></pre></div></div>
+
+<h3 id="environmental-sensors">Environmental Sensors</h3>
+
+<p>The SHT45 is a very accurate temperature and humidity sensor. The BMP581 is a very accurate pressure sensor. The raw measurements are internal sensors. These measurements determine the absolute humidity and dew point in the garage. <code class="language-plaintext highlighter-rouge">Copy</code> sensors send the average value to Home Assistant every 15 seconds using the <code class="language-plaintext highlighter-rouge">throttle_average</code> filter.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+external_components:
+  - source: github://pr#4657	# included in ESPHome 2023.8 beta
+    components: [ bmp581 ]    
+
+sensor:
+  # SHT45 Temperature and Humidity Sensor
+  - platform: sht4x
+    update_interval: 0.25s
+    temperature:
+      id: sht45_temperature
+    humidity:
+      id: sht45_humidity
+
+  # BMP581 Pressure and Temperature Sensor
+  - platform: bmp581
+    update_interval: 0.25s
+    address: 0x47
+    temperature:
+      id: bmp581_temperature
+      oversampling: 8x
+    pressure:
+      id: bmp581_pressure
+      oversampling: 128x
+
+  # Absolute Humidity Sensor derived from temperature and humidity
+  - platform: absolute_humidity
+    temperature: sht45_temperature
+    humidity: sht45_humidity
+    id: absolute_humidity_sensor
+
+  # Dew point Sensor computed using Magnus-Tetens formula (uncertain up to 0.35 degrees C)
+  - platform: template
+    id: dew_point
+    update_interval: 1s
+    device_class: temperature
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1                                # formula is uncertain up to 0.35 degrees C = 0.63 degrees F for usual indoor temperatures
+    lambda: |- 
+        const float alpha = 6.112;                      // (hPa)
+        const float beta = 17.62;
+        const float lambda = 243.12;                    // (degrees C)
+
+        float RH = id(sht45_humidity).state;               // Relative Humidity
+        float T = id(sht45_temperature).state;                    // Temperature in (degrees C)
+
+        float H = log( RH/100 ) + beta*T/(lambda+T);
+        return (lambda)*H/(beta - H);  
+
+  # SHT45 Sensor
+  - platform: copy
+    source_id: sht45_temperature
+    name: "Temperature"
+    accuracy_decimals: 1
+    filters:
+      - throttle_average: 15s
+  - platform: copy
+    source_id: sht45_humidity
+    name: "Humidity"
+    accuracy_decimals: 1
+    filters:
+      - throttle_average: 15s
+
+    # BMP581 Pressure Sensor
+  - platform: copy
+    source_id: bmp581_pressure
+    name: "Pressure"
+    filters:
+      - throttle_average: 15s
+  - platform: copy
+    source_id: bmp581_temperature
+    name: "BMP581 Temperature"
+    entity_category: diagnostic    
+    filters:
+      - throttle_average: 15s
+
+  # Humidity Derived Sensors
+  - platform: copy
+    source_id: absolute_humidity_sensor
+    name: "Absolute Humidity"
+    filters:
+      - throttle_average: 15s     
+  - platform: copy
+    source_id: dew_point
+    name: "Dew Point"
+    filters:
+      - throttle_average: 15s   
+
+</code></pre></div></div>]]></content><author><name>Kevin Ahrendt</name></author><category term="programming" /><category term="smart-home" /><category term="esphome" /><category term="statistics" /><category term="data" /><summary type="html"><![CDATA[Introduction]]></summary></entry><entry><title type="html">Long-Term Data Storage of ESPHome Sensor Data</title><link href="/long-term-storage-of-esphome-sensor-data" rel="alternate" type="text/html" title="Long-Term Data Storage of ESPHome Sensor Data" /><published>2023-06-15T00:00:00-04:00</published><updated>2023-06-15T00:00:00-04:00</updated><id>/long-term-storage-of-esphome-sensor-data</id><content type="html" xml:base="/long-term-storage-of-esphome-sensor-data"><![CDATA[<h2 id="introduction">Introduction</h2>
 
 <p>I currently have 26 devices running ESPHome that collect data from our home. The various devices include environmental sensors like air pressure, temperature, humidity, and levels for CO2, VOC levels, and particulate matter. Other devices collect power/energy usage using smart plugs or a whole house power monitoring device (<a href="https://www.emporiaenergy.com/how-the-vue-energy-monitor-works">Emporia Vue 2</a> with <a href="https://github.com/emporia-vue-local/esphome">custom component</a>). Altogether, these devices generate a significant amount of raw data. That data is partially filtered and sent to my Home Assistant server. Home Assistant then stores the filtered data for about ten days. After that time, Home Assistant only keeps aggregates like the mean, minimum, and maximum for <a href="https://data.home-assistant.io/docs/statistics/">1-hour intervals</a>. I plan to collect all this measurement data in a separate database for permanent storage. I will retain raw data for one month and permanently retain all data aggregated over one-minute intervals.</p>
 
@@ -479,6 +782,4 @@ This means, if we use all 4 rings in this file, it takes \(2^4-1 = 15\) steps at
   <li>Continous fractional derivative of the exponential function: <a href="assets/3d-models/continuous_exponential/Graph_Exponential.stl">Graph_Exponential.stl</a></li>
   <li>Stand: <a href="assets/3d-models/continuous_exponential/Graph_Exponential_Stand.stl">Graph_Exponential_Stand.stl</a></li>
   <li>Mathematica Notebook: <a href="assets/3d-models/continuous_exponential/Graph_Exponential.nb">Graph_Exponential.nb</a></li>
-</ul>]]></content><author><name>Kevin Ahrendt</name></author><category term="3d-printing" /><category term="3d printing" /><category term="mathematics" /><summary type="html"><![CDATA[Description: This model is a three dimensional graph \(e^x\), with one axis representing the Riemann-Liouville fractional derivative order ranging from 0 to 1. The x-axis ranges from 0.05 to 1; the fractional derivative of \(e^x\) approaches infinity as x approaches 0, hence the axis starts at 0.05 avoid the asymptote. The Riemann-Liouville fractional derivative is continuous with the respect to the order of the derivative, so this graph is nice and smooth.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/print-continous-exponential.jpg" /><media:content medium="image" url="/print-continous-exponential.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">3D Printing Setup</title><link href="/3d-printing-setup" rel="alternate" type="text/html" title="3D Printing Setup" /><published>2017-06-01T00:00:00-04:00</published><updated>2017-06-01T00:00:00-04:00</updated><id>/3d-printing-setup</id><content type="html" xml:base="/3d-printing-setup"><![CDATA[<p>I am fascinated with 3D printing and am interested in making mathematical puzzles using that process, along with models that illustrate my research interests. I primarily use Autodesk Fusion 360 to design functional models and use Mathematica to generate mathematical models. I have also have experience with OpenSCAD for model design. My current printer is a <a href="https://vorondesign.com/">Voron CoreXY V2.1</a>.​</p>
-
-<p>My <a href="https://www.thingiverse.com/kahrendt/designs">Thingiverse page</a> contains some models I have designed. <a href="https://www.georgehart.com/rp/rp.html">George Hart</a> has created many mathematical puzzle designs capable of being 3D printed.  <a href="https://www.thingiverse.com/thing:1565383">Laura Taalman</a> has designed printable versions of some cube puzzles, and <a href="http://www.mathematische-basteleien.de/somacube.htm">Jürgen Köller</a> has mathematical information about those classes of cube of puzzles.</p>]]></content><author><name>Kevin Ahrendt</name></author><category term="3d-printing" /><category term="3d printing" /><summary type="html"><![CDATA[I am fascinated with 3D printing and am interested in making mathematical puzzles using that process, along with models that illustrate my research interests. I primarily use Autodesk Fusion 360 to design functional models and use Mathematica to generate mathematical models. I have also have experience with OpenSCAD for model design. My current printer is a Voron CoreXY V2.1.​]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/print-continous-exponential.jpg" /><media:content medium="image" url="/print-continous-exponential.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+</ul>]]></content><author><name>Kevin Ahrendt</name></author><category term="3d-printing" /><category term="3d printing" /><category term="mathematics" /><summary type="html"><![CDATA[Description: This model is a three dimensional graph \(e^x\), with one axis representing the Riemann-Liouville fractional derivative order ranging from 0 to 1. The x-axis ranges from 0.05 to 1; the fractional derivative of \(e^x\) approaches infinity as x approaches 0, hence the axis starts at 0.05 avoid the asymptote. The Riemann-Liouville fractional derivative is continuous with the respect to the order of the derivative, so this graph is nice and smooth.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/print-continous-exponential.jpg" /><media:content medium="image" url="/print-continous-exponential.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
