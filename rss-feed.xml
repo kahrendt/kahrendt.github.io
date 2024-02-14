@@ -7,6 +7,20 @@
 		<atom:link href="/rss-feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>microWakeWord</title>
+				
+					<dc:creator>Kevin Ahrendt</dc:creator>
+				
+				
+					<description>&lt;p&gt;Wake word detection is a common problem for voice assistants. &lt;a href=&quot;https://www.home-assistant.io/&quot;&gt;Home Assistant&lt;/a&gt; made 2023 the &lt;a href=&quot;https://www.home-assistant.io/blog/2022/12/20/year-of-voice/&quot;&gt;Year of Voice&lt;/a&gt;, where they developed many basic features necessary for a fully open-source and local assistant. &lt;a href=&quot;https://www.home-assistant.io/blog/2023/10/12/year-of-the-voice-chapter-4-wakewords/&quot;&gt;Wake word detection&lt;/a&gt; used &lt;a href=&quot;https://github.com/dscripka/openWakeWord/&quot;&gt;openWakeWord&lt;/a&gt;. ESPHome satellite devices stream all voice audio to a central server running openWakeWord to detect the wake words. While this works well, it introduces extra latency to the assist pipeline. It is easy to train new custom words in openWakeWord, but, unfortunately, it uses a speech embedding model that is too slow on ESP32 devices.&lt;/p&gt;
+</description>
+				
+				<pubDate>Wed, 14 Feb 2024 00:00:00 -0500</pubDate>
+				<link>/micro-wake-word</link>
+				<guid isPermaLink="true">/micro-wake-word</guid>
+			</item>
+		
+			<item>
 				<title>Smart Garage Door Opener with Environmental Sensors</title>
 				
 					<dc:creator>Kevin Ahrendt</dc:creator>
@@ -134,21 +148,6 @@
 				<pubDate>Sat, 03 Aug 2019 00:00:00 -0400</pubDate>
 				<link>/towers_of_hanoi_print</link>
 				<guid isPermaLink="true">/towers_of_hanoi_print</guid>
-			</item>
-		
-			<item>
-				<title>Continuous Fractional Derivative of Exponential Function</title>
-				
-					<dc:creator>Kevin Ahrendt</dc:creator>
-				
-				
-					<description>&lt;h2 id=&quot;description&quot;&gt;Description:&lt;/h2&gt;
-&lt;p&gt;This model is a three dimensional graph \(e^x\), with one axis representing the Riemann-Liouville fractional derivative order ranging from 0 to 1. The x-axis ranges from 0.05 to 1; the fractional derivative of \(e^x\) approaches infinity as x approaches 0, hence the axis starts at 0.05 avoid the asymptote. The Riemann-Liouville fractional derivative is continuous with the respect to the order of the derivative, so this graph is nice and smooth.&lt;/p&gt;
-</description>
-				
-				<pubDate>Fri, 08 Dec 2017 00:00:00 -0500</pubDate>
-				<link>/continuous_exponential_print</link>
-				<guid isPermaLink="true">/continuous_exponential_print</guid>
 			</item>
 		
 	</channel>

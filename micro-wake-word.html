@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+  <head>
+  <title>
+    
+      microWakeWord | Kevin Ahrendt
+    
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/syntax.css">
+  <!-- Use Atom -->
+  <link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Kevin Ahrendt" />
+  <!-- RSS-v2.0
+  <link href="/rss-feed.xml" type="application/rss+xml" rel="alternate" title="Kevin Ahrendt | A personal website for 3D printing, mathematics, data science, and home automation."/>
+  //-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Source+Code+Pro">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+  <!-- Google Analytics -->
+  <!-- <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+ -->
+  <!-- Use Jekyll SEO plugin -->
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>microWakeWord | Kevin Ahrendt</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="microWakeWord" />
+<meta name="author" content="Kevin Ahrendt" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Wake word detection is a common problem for voice assistants. Home Assistant made 2023 the Year of Voice, where they developed many basic features necessary for a fully open-source and local assistant. Wake word detection used openWakeWord. ESPHome satellite devices stream all voice audio to a central server running openWakeWord to detect the wake words. While this works well, it introduces extra latency to the assist pipeline. It is easy to train new custom words in openWakeWord, but, unfortunately, it uses a speech embedding model that is too slow on ESP32 devices." />
+<meta property="og:description" content="Wake word detection is a common problem for voice assistants. Home Assistant made 2023 the Year of Voice, where they developed many basic features necessary for a fully open-source and local assistant. Wake word detection used openWakeWord. ESPHome satellite devices stream all voice audio to a central server running openWakeWord to detect the wake words. While this works well, it introduces extra latency to the assist pipeline. It is easy to train new custom words in openWakeWord, but, unfortunately, it uses a speech embedding model that is too slow on ESP32 devices." />
+<meta property="og:site_name" content="Kevin Ahrendt" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-02-14T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="microWakeWord" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kevin Ahrendt"},"dateModified":"2024-02-14T00:00:00-05:00","datePublished":"2024-02-14T00:00:00-05:00","description":"Wake word detection is a common problem for voice assistants. Home Assistant made 2023 the Year of Voice, where they developed many basic features necessary for a fully open-source and local assistant. Wake word detection used openWakeWord. ESPHome satellite devices stream all voice audio to a central server running openWakeWord to detect the wake words. While this works well, it introduces extra latency to the assist pipeline. It is easy to train new custom words in openWakeWord, but, unfortunately, it uses a speech embedding model that is too slow on ESP32 devices.","headline":"microWakeWord","mainEntityOfPage":{"@type":"WebPage","@id":"/micro-wake-word"},"url":"/micro-wake-word"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+  <body>
+    <div class="container">
+      <header class="site-header">
+  <h3 class="site-title">
+    <a href="/">Kevin Ahrendt</a>
+  </h3>
+  <nav class="menu-list">
+    
+      <a href="/3d-printing" class="menu-link">3D Printing</a>
+    
+      <a href="/programming" class="menu-link">Programming</a>
+    
+      <a href="/smart-home" class="menu-link">Smart Home Data</a>
+    
+      <a href="/academics" class="menu-link">Academics</a>
+    
+      <a href="/about-me" class="menu-link">About Me</a>
+    
+      <a href="/contact" class="menu-link">Contact</a>
+    
+    
+  </nav>
+  <div class="dropdown">
+    <button class="dropbtn"><i class="fa fa-bars" aria-hidden="true"></i></button>
+    <div class="dropdown-content">
+      
+        <a href="/3d-printing" class="menu-link">3D Printing</a>
+      
+        <a href="/programming" class="menu-link">Programming</a>
+      
+        <a href="/smart-home" class="menu-link">Smart Home Data</a>
+      
+        <a href="/academics" class="menu-link">Academics</a>
+      
+        <a href="/about-me" class="menu-link">About Me</a>
+      
+        <a href="/contact" class="menu-link">Contact</a>
+      
+      
+    </div>
+  </div>
+</header>
+
+      <div class="content-wrapper">
+        <div class="post-content">
+  <h1>
+    microWakeWord
+  </h1>
+  
+    <span class="post-date">
+  Written on
+  
+  February
+  14th,
+  2024
+  by
+  
+    Kevin Ahrendt
+  
+</span>
+
+  
+  
+  <article>
+    <p>Wake word detection is a common problem for voice assistants. <a href="https://www.home-assistant.io/">Home Assistant</a> made 2023 the <a href="https://www.home-assistant.io/blog/2022/12/20/year-of-voice/">Year of Voice</a>, where they developed many basic features necessary for a fully open-source and local assistant. <a href="https://www.home-assistant.io/blog/2023/10/12/year-of-the-voice-chapter-4-wakewords/">Wake word detection</a> used <a href="https://github.com/dscripka/openWakeWord/">openWakeWord</a>. ESPHome satellite devices stream all voice audio to a central server running openWakeWord to detect the wake words. While this works well, it introduces extra latency to the assist pipeline. It is easy to train new custom words in openWakeWord, but, unfortunately, it uses a speech embedding model that is too slow on ESP32 devices.</p>
+
+<p>In the last decade, many researchers have studied the keyword spotting problem. <a href="https://arxiv.org/abs/1711.07128">Hello Edge: Keyword Spotting on Microcontrollers</a> is an early paper focusing on models that can run well on edge devices. Google Research published<a href="https://arxiv.org/abs/2005.06720">Streaming keyword spotting on mobile devices</a> along with <a href="https://github.com/google-research/google-research/tree/master/kws_streaming">source code</a> that makes it easy to train models that predict the wake word in a streaming fashion; i.e., the model provides a probability for each new slice of processed audio. This approach saves a lot of computational effort, as the model does not reprocess older audio slices for every inference.</p>
+
+<p>I have written <a href="https://github.com/kahrendt/microWakeWord">microWakeWord</a> to develop streaming wake word models suitable for ESP32-S3 devices. <a href="https://esphome.io/">ESPHome’s</a> February 2024 release will add support for microWakeWord models. I heavily adapted the project from Google Research’s code. It currently uses an Inception based model. It is fast enough to be used on an ESP32-S3 chip and with high accuracy for real-world usage. We generate wake word samples using <a href="https://github.com/rhasspy/piper-sample-generator">Piper sample generator</a>. We then augment them using openWakeWord’s utilities. We use additional <a href="https://github.com/kahrendt/microWakeWord/blob/main/documentation/data_sources.md">data sources</a> for negative samples.</p>
+
+<p>I am still in the early phase of developing this! Currently, microWakeWord trains usable models. However, manual tweaking is necessary to produce a model with low false accept and false rejection rates. The project can convert a folder of audio files into spectrogram features for training, but no augmentations are applied. I have uploaded two models: “Hey Jarvis” and “Okay Nabu.” I will rework the “Hey Jarvis” model to handle background noise better. The newer “Okay Nabu” performs very well even with loud music playing due to various model design improvements and a better training process. I encourage you to follow the project on GitHub to see future improvements!</p>
+
+  </article>
+  
+  
+  
+</div>
+
+      </div>
+      <footer class="footer">
+  
+  <div class="footer-description"><a href="/">Kevin Ahrendt | A personal website for 3D printing, mathematics, data science, and home automation.</a></div>
+</footer>
+
+    </div>
+  </body>
+</html>
